@@ -1,0 +1,38 @@
+#!/bin/bash
+
+read -r -p "Before continuing, enter your username for this adventure! " player
+
+PS3="Welcome $player, make a choice in the menu: "
+choices=("Scenario 1" "Scenario 2" "Help" "Quit")
+select choice in "${choices[@]}"; do
+	case $choice in
+		"Scenario 1")
+			echo "\"
+			echo "Scenario 1"
+			;;
+		"Scenario 2")
+			echo "\"
+			echo "Scenario 2"
+			;;
+		"Help")
+			echo "\"
+			echo "***********************************************************"
+			echo "This interactive blue team experience was made by"
+			echo -e "\e[38;5;153mYannick VC. (Cloud Intern) AWS\e[0m"
+			echo -e "\e[38;5;199mAlexander D. (Cloud Intern) Azure\e[0m"
+			echo "****************************************************"
+			;;
+		"Quit")
+			read -r -p "Are you sure you want to quit? [y/N] " response
+			case "$response" in 
+				[yY][eE][sS]|[yY])
+					exit 0;;
+				*)
+					;;
+			esac
+			;;
+		*)
+			echo "The following answer is not allowed: $REPLY"
+			;;
+	esac
+done
