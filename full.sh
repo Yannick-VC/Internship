@@ -97,7 +97,7 @@ Red="\033[01;31m"
 MainC="\033[01;37m"
 ClearColor="\033[0m"
 
-PS3="\nWelcome $player, make a choice in the menu: "
+PS3="Welcome $player, make a choice in the menu: "
 choices=("Scenario 1" "Scenario 2" "Help" "Quit")
 select choice in "${choices[@]}"; do
 	case $choice in
