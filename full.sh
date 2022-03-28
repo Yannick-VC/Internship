@@ -7,6 +7,7 @@ sudo apt-get update
 
 #Install curl
 sudo apt-get install curl -y
+sudo apt-get install git -y
 
 #gnupg install
 sudo apt-get install -y gnupg software-properties-common curl
@@ -86,7 +87,7 @@ echo "*************************************"
 echo "Your system passed the test!"
 echo "*************************************"
 echo "*************************************"
-echo -e "\n*************************************"
+echo -e "*************************************\n"
 
 read -r -p "Before continuing, enter your username for this adventure! " player
 
