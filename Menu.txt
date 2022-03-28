@@ -2,25 +2,28 @@
 
 read -r -p "Before continuing, enter your username for this adventure! " player
 
+#Colors
+Blue="\033[01;34m"
+Red="\033[01;31m"
+MainC="\033[01;37m"
+ClearColor="\033[0m"
+
 PS3="Welcome $player, make a choice in the menu: "
 choices=("Scenario 1" "Scenario 2" "Help" "Quit")
 select choice in "${choices[@]}"; do
 	case $choice in
 		"Scenario 1")
-			echo "\"
-			echo "Scenario 1"
+			echo -e "\nScenario 1"
 			;;
 		"Scenario 2")
-			echo "\"
-			echo "Scenario 2"
+			echo -e "\nScenario 2"
 			;;
 		"Help")
-			echo "\"
-			echo "***********************************************************"
-			echo "This interactive blue team experience was made by"
-			echo -e "\e[38;5;153mYannick VC. (Cloud Intern) AWS\e[0m"
-			echo -e "\e[38;5;199mAlexander D. (Cloud Intern) Azure\e[0m"
-			echo "****************************************************"
+			echo -e  "\n${MainC}***********************************************************"
+			echo "This interactive blue teaming experience was made by:"
+			echo -e "${Blue}Yannick VC. (Cloud Intern)"
+			echo -e "${Red}Alexander D. (Cloud Intern)${MainC}"
+			echo -e  "****************************************************${ClearColor}"
 			;;
 		"Quit")
 			read -r -p "Are you sure you want to quit? [y/N] " response
@@ -28,6 +31,7 @@ select choice in "${choices[@]}"; do
 				[yY][eE][sS]|[yY])
 					exit 0;;
 				*)
+					break
 					;;
 			esac
 			;;
