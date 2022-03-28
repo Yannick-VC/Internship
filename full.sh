@@ -79,7 +79,7 @@ cd ../
 sudo rm -rf learn-terraform-docker-container
 
 echo -e "\n********GITHUB PULLS***********"
-git clone https://github.com/YannickVC2/AWS-Terraform
+git clone https://github.com/YannickVC2/Internship
 
 echo -e "\n*************************************"
 echo "*************************************"
