@@ -77,6 +77,9 @@ sudo terraform destroy -lock=false
 cd ../
 sudo rm -rf learn-terraform-docker-container
 
+echo "********GITHUB PULLS***********"
+git clone https://github.com/YannickVC2/AWS-Terraform
+
 echo "*************************************"
 echo "*************************************"
 echo "*************************************"
@@ -98,30 +101,24 @@ choices=("Scenario 1" "Scenario 2" "Help" "Quit")
 select choice in "${choices[@]}"; do
 	case $choice in
 		"Scenario 1")
-			echo -e "\nScenario 1"
-			;;
+			echo -e "\nScenario 1";;
 		"Scenario 2")
-			echo -e "\nScenario 2"
-			;;
+			echo -e "\nScenario 2";;
 		"Help")
-			echo -e  "\n${MainC}***********************************************************"
+			echo -e  "\n${MainC}*******************************************************"
 			echo "This interactive blue teaming experience was made by:"
 			echo -e "${Blue}Yannick VC. (Cloud Intern)"
 			echo -e "${Red}Alexander D. (Cloud Intern)${MainC}"
-			echo -e  "****************************************************${ClearColor}"
-			;;
+			echo -e  "*******************************************************${ClearColor}";;
 		"Quit")
-			read -r -p "Are you sure you want to quit? [y/N] " response
+			read -r -p "Are you sure you want to quit? [y/n] " response
 			case "$response" in 
 				[yY][eE][sS]|[yY])
 					exit 0;;
 				*)
-					break
 					;;
-			esac
-			;;
+			esac;;
 		*)
-			echo "The following answer is not allowed: $REPLY"
-			;;
+			echo "The following answer is not allowed: $REPLY";;
 	esac
 done
