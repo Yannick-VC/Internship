@@ -3,7 +3,7 @@
 echo "*********Install Terraform***********"
 
 #System updates
-sudo apt-get update && sudo apt-get upgrade -y 
+sudo apt-get update 
 
 #Install curl
 sudo apt-get install curl -y
