@@ -71,8 +71,8 @@ EOL
 sudo terraform init
 sudo terraform validate
 sudo terraform apply
-sudo docker rmi -f hello-world nginx
 sudo terraform destroy -lock=false
+sudo docker rmi -f hello-world nginx
 
 cd ../
 sudo rm -rf learn-terraform-docker-container
@@ -80,7 +80,7 @@ sudo rm -rf learn-terraform-docker-container
 echo "********GITHUB PULLS***********"
 git clone https://github.com/YannickVC2/AWS-Terraform
 
-echo "*************************************"
+echo "\n*************************************"
 echo "*************************************"
 echo "*************************************"
 echo "Your system passed the test!"
@@ -96,7 +96,7 @@ Red="\033[01;31m"
 MainC="\033[01;37m"
 ClearColor="\033[0m"
 
-PS3="Welcome $player, make a choice in the menu: "
+PS3="\nWelcome $player, make a choice in the menu: "
 choices=("Scenario 1" "Scenario 2" "Help" "Quit")
 select choice in "${choices[@]}"; do
 	case $choice in
