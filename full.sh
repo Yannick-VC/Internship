@@ -77,16 +77,16 @@ sudo docker rmi -f hello-world nginx
 cd ../
 sudo rm -rf learn-terraform-docker-container
 
-echo "********GITHUB PULLS***********"
+echo -e "\n********GITHUB PULLS***********"
 git clone https://github.com/YannickVC2/AWS-Terraform
 
-echo "\n*************************************"
+echo -e "\n*************************************"
 echo "*************************************"
 echo "*************************************"
 echo "Your system passed the test!"
 echo "*************************************"
 echo "*************************************"
-echo "*************************************"
+echo -e "\n*************************************"
 
 read -r -p "Before continuing, enter your username for this adventure! " player
 
