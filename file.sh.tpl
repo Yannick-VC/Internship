@@ -1,5 +1,6 @@
 #!/bin/bash
 
+: <<'END'
 sudo apt update -y
 sudo apt install apache2 wget unzip -y
 sudo apt install mysql-server -y
@@ -33,17 +34,22 @@ Alias /phpMyAdmin /usr/share/phpmyadmin
    </IfModule>
 </Directory>
 EOF
+END
+echo "db_password=${db_password}" > /usr/share/phpmyadmin/cred.txt
+echo "db_username=${db_username}" >> /usr/share/phpmyadmin/cred.txt
+echo "db_address=${db_address}" >> /usr/share/phpmyadmin/cred.txt
 
-echo "<?php" > /usr/share/phpmyadmin/testing.php
-echo "host = ${db_address}" >> /usr/share/phpmyadmin/testing.php
-echo "username = ${db_username}" >> /usr/share/phpmyadmin/testing.php
-echo "password = ${db_password}" >> /usr/share/phpmyadmin/testing.php
+db_password=`sed -n 's/^db_password=\(.*\)/\1/p' < /usr/share/phpmyadmin/cred.txt`
+db_username=`sed -n 's/^db_username=\(.*\)/\1/p' < /usr/share/phpmyadmin/cred.txt`
+db_address=`sed -n 's/^db_address=\(.*\)/\1/p' < /usr/share/phpmyadmin/cred.txt`
 
+echo "$db_password"
+echo "$db_username"
+echo "$db_address"
 
 sudo cat > /usr/share/phpmyadmin/testingpurpose.txt << 'EOL'
 
 <?php
-include 'testing.php'
 declare(strict_types=1);
 $cfg['blowfish_secret'] = '';
 $i = 0;
@@ -61,9 +67,18 @@ $cfg['Servers'][$i]['password'] = '$password';
 $cfg['Servers'][$i]['auth_type'] = 'config';
 EOL
 
-search="\$cfg['blowfish_secret'] = '';"; 
-replace="\$cfg['blowfish_secret'] = '1234';";
-sed -i "s/\$cfg\[.blowfish_secret.\]\s*=.*/$replace/" /usr/share/phpmyadmin/testingpurpose.txt
+search="\$cfg['Servers'][$i]['host'] = '$host';"; 
+replace="\$cfg['Servers'][$i]['host'] = '$db_address';";
+sed -i "s/\$cfg\[.Servers.\]\[$i\]\[.host.\]\s*=.*/$replace/" /usr/share/phpmyadmin/testingpurpose.txt
+
+search2="\$cfg['Servers'][$i]['user'] = '$host';";
+replace2="\$cfg['Servers'][$i]['user'] = '$db_username';";
+sed -i "s/\$cfg\[.Servers.\]\[$i\]\[.host.\]\s*=.*/$replace2/" /usr/share/phpmyadmin/testingpurpose.txt
+
+search3="\$cfg['Servers'][$i]['password'] = '$password';";
+replace3="\$cfg['Servers'][$i]['password'] = '$db_password';";
+sed -i "s/\$cfg\[.Servers.\]\[$i\]\[.host.\]\s*=.*/$replace3/" /usr/share/phpmyadmin/testingpurpose.txt
 
 sudo a2enconf phpmyadmin
 sudo systemctl restart apache2
+
