@@ -5,21 +5,17 @@ echo "*********Install Terraform***********"
 #System updates
 sudo apt-get update 
 
-#Install curl
-sudo apt-get install curl -y
-sudo apt-get install git -y
-
-#gnupg install
-sudo apt-get install -y gnupg software-properties-common curl
-
+#Add official Hashicorp linux repository
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 #Add Hashicorp GPG key
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 
-#Add official Hashicorp linux repository
-sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-
-#Update to add repo and install Terraform CLI
-sudo apt-get update && sudo apt-get install terraform
+#Install curl
+sudo apt-get install curl git awscli gnupg software-properties-common docker.io terraform -y
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+unzip awscli-bundle.zip
+sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
 #Check Terraform install
 terraform -help
