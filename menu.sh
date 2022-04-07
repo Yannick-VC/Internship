@@ -81,7 +81,7 @@ echo -e "=====================================\n"
 
 
 #Username validation
-read -r -p "Before continuing, enter your username! (between 4-10 characters) " player
+read -r -p "Before continuing, enter your username! (between 4-10 characters) | " player
 
 while :
 do
