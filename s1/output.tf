@@ -5,7 +5,7 @@ output "DB-Username" {
 
 output "DB-Password" {
   description = "Password used for login of database"
-  value = aws_db_instance.production.password
+  value = "password123"
 }
 
 output "DB-Address" {
