@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "*********Install Terraform***********"
-
 #System updates
 sudo apt-get update
 
