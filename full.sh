@@ -77,45 +77,91 @@ sudo rm -rf learn-terraform-docker-container
 echo -e "\n********GITHUB PULLS***********"
 git clone https://github.com/YannickVC2/Internship
 
-echo -e "\n*************************************"
-echo "*************************************"
-echo "*************************************"
+echo -e "\n================================="
 echo "Your system passed the test!"
-echo "*************************************"
-echo "*************************************"
-echo -e "*************************************\n"
+echo -e "=================================\n"
 
-read -r -p "Before continuing, enter your username for this adventure! " player
+#Username validation
+read -r -p "Before continuing, enter your username! (between 4-10 characters) " player
 
-#Colors
+while :
+do
+	if [[ ${#player} -ge 11 || ${#player} -le 3 ]]; then
+		echo -e "Given username contains ${#player} character(s), re-enter your username (between 4-10 characters)"
+          	read -r -p "" player
+	else
+		break
+fi
+done
+
+#Styling
 Blue="\033[01;34m"
 Red="\033[01;31m"
 MainC="\033[01;37m"
 ClearColor="\033[0m"
 
-PS3="Welcome $player, make a choice in the menu: "
-choices=("Scenario 1" "Scenario 2" "Help" "Quit")
-select choice in "${choices[@]}"; do
-	case $choice in
-		"Scenario 1")
-			echo -e "\nScenario 1";;
-		"Scenario 2")
-			echo -e "\nScenario 2";;
-		"Help")
-			echo -e  "\n${MainC}*******************************************************"
-			echo "This interactive blue teaming experience was made by:"
-			echo -e "${Blue}Yannick VC. (Cloud Intern)"
-			echo -e "${Red}Alexander D. (Cloud Intern)${MainC}"
-			echo -e  "*******************************************************${ClearColor}";;
-		"Quit")
-			read -r -p "Are you sure you want to quit? [y/n] " response
-			case "$response" in 
-				[yY][eE][sS]|[yY])
-					exit 0;;
-				*)
-					;;
-			esac;;
-		*)
-			echo "The following answer is not allowed: $REPLY";;
-	esac
+bold=`tput bold`
+normal=`tput sgr0`
+
+#Playing menu
+while :
+do
+clear
+cat<<EOF
+=============================================
+| Cyber Cloud Internship                    |
+|------------------------------------------ |
+| Hello, $player, please make a choise:
+|                                           |
+| Play scenario 1 (1)                       |
+| Play scenario 2 (2)                       |
+| Help me         (3)                       |
+| Quit the game   (4)                       |
+---------------------------------------------
+EOF
+    read -n1 -s
+    case "$REPLY" in
+    "1")  echo -e "${bold}$player${normal}, scenario 1 will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
+	
+	#Make this path correct ./Internship/s1....
+	cd ./s1/
+	
+	#terraform init
+	#terraform plan
+	#terraform apply -auto-approve
+	
+	#StoryTelling
+	echo -e "${bold}What is my mission?${normal}"
+	echo -e "Your mission is to infiltrate the database (IP will be given later on), find a way to perform privillege escalation and\x0abreak into the backup databaselocated on a different subnet"
+	read -n 1 -s -r -p  $'\x0aPress any key to continue\x0a'
+
+	#Questions 1
+	read -r -p $'Question 1: What is the password to the PHPMyAdmin login page?\x0a' s1a1
+
+	#Question 2
+	read -r -p $'Question 2: Which backup was compromised in the logging database? (format = DD/MM/YYYY)\x0a' s1a2
+
+	#Question 3
+	read -r -p $'Question 3: \x0a' s1a3
+
+	#Thank you
+	echo -e "Thank you for playing our game $player! Let me put you back to the main menu."
+	sleep 5
+          ;;
+    "2")  echo "Comming soon!" 
+	sleep 5
+	;;
+    "3") 	echo -e  "\n${MainC}---------------------------------------------------------"
+	echo "| This interactive blue teaming experience was made by: |"
+	echo -e "| ${Blue}Yannick VC. (Cloud Intern)${MainC}                            |"
+	echo -e "| ${Red}Alexander D. (Cloud Intern)${MainC}                           |"
+	echo -e  "---------------------------------------------------------${ClearColor}"
+	sleep 5
+ 	;;
+    "4")  exit                      ;;
+     * )  echo "invalid option"
+	sleep 1
+	;;
+    esac
 done
+
