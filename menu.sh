@@ -1,9 +1,11 @@
 #!/bin/bash
 
+: <<'END'
+
 echo "*********Install Terraform***********"
 
 #System updates
-sudo apt-get update 
+sudo apt-get update
 
 #Add official Hashicorp linux repository
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
@@ -77,20 +79,27 @@ sudo rm -rf learn-terraform-docker-container
 echo -e "\n********GITHUB PULLS***********"
 git clone https://github.com/YannickVC2/Internship
 
-echo -e "\n================================="
+echo -e "\n*************************************"
+echo "*************************************"
+echo "*************************************"
 echo "Your system passed the test!"
-echo -e "=================================\n"
+echo "*************************************"
+echo "*************************************"
+echo -e "*************************************\n"
+
+END
+
 
 #Username validation
 read -r -p "Before continuing, enter your username! (between 4-10 characters) " player
 
 while :
 do
-	if [[ ${#player} -ge 11 || ${#player} -le 3 ]]; then
-		echo -e "Given username contains ${#player} character(s), re-enter your username (between 4-10 characters)"
-          	read -r -p "" player
-	else
-		break
+        if [[ ${#player} -ge 11 || ${#player} -le 3 ]]; then
+                echo -e "Given username contains ${#player} character(s), re-enter your username (between 4-10 characters)"
+                read -r -p "" player
+        else
+                break
 fi
 done
 
@@ -115,53 +124,55 @@ cat<<EOF
 |                                           |
 | Play scenario 1 (1)                       |
 | Play scenario 2 (2)                       |
-| Help me         (3)                       |
-| Quit the game   (4)                       |
+| How to play     (3)                       |
+| Credits         (4)                       |
+| Quit the game   (5)                       |
 ---------------------------------------------
 EOF
-    read -n1 -s
-    case "$REPLY" in
-    "1")  echo -e "${bold}$player${normal}, scenario 1 will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
-	
-	#Make this path correct ./Internship/s1....
-	cd ./s1/
-	
-	#terraform init
-	#terraform plan
-	#terraform apply -auto-approve
-	
-	#StoryTelling
-	echo -e "${bold}What is my mission?${normal}"
-	echo -e "Your mission is to infiltrate the database (IP will be given later on), find a way to perform privillege escalation and\x0abreak into the backup databaselocated on a different subnet"
-	read -n 1 -s -r -p  $'\x0aPress any key to continue\x0a'
 
-	#Questions 1
-	read -r -p $'Question 1: What is the password to the PHPMyAdmin login page?\x0a' s1a1
+#Player choises with all other code
+read -n1 -s
+case "$REPLY" in
+    "1")echo -e "${bold}$player${normal}, scenario 1 will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
 
-	#Question 2
-	read -r -p $'Question 2: Which backup was compromised in the logging database? (format = DD/MM/YYYY)\x0a' s1a2
+        #Make this path correct ./Internship/s1....
+        cd ./s1/
+        #terraform init
+        #terraform plan
+        #terraform apply -auto-approve
 
-	#Question 3
-	read -r -p $'Question 3: \x0a' s1a3
+        #Storyline
+        echo -e "${bold}What is my mission?${normal}"
+        echo -e "Your mission is to infiltrate the database (IP will be given later on), find a way to perform privillege escalation and\x0abreak into the backup databaselocated on a different subnet"
+        read -n 1 -s -r -p  $'\x0aPress any key to continue\x0a'
 
-	#Thank you
-	echo -e "Thank you for playing our game $player! Let me put you back to the main menu."
-	sleep 5
-          ;;
-    "2")  echo "Comming soon!" 
-	sleep 5
-	;;
-    "3") 	echo -e  "\n${MainC}---------------------------------------------------------"
-	echo "| This interactive blue teaming experience was made by: |"
-	echo -e "| ${Blue}Yannick VC. (Cloud Intern)${MainC}                            |"
-	echo -e "| ${Red}Alexander D. (Cloud Intern)${MainC}                           |"
-	echo -e  "---------------------------------------------------------${ClearColor}"
-	sleep 5
- 	;;
-    "4")  exit                      ;;
-     * )  echo "invalid option"
-	sleep 1
-	;;
+        #Questions 1
+        read -r -p $'Question 1: What is the password to the PHPMyAdmin login page?\x0a' s1a1
+
+        #Question 2
+        read -r -p $'Question 2: Which backup was compromised in the logging database? (format = DD/MM/YYYY)\x0a' s1a2
+
+        #Question 3
+        read -r -p $'Question 3: \x0a' s1a3
+
+        echo -e "Thank you for playing our game $player! Let me put you back to the main menu."
+        sleep 5
+         ;;
+    "2")echo "Comming soon!"
+        sleep 5
+        ;;
+    "3")echo "Comming soon!"
+        ;;
+    "4")echo -e  "\n${MainC}---------------------------------------------------------"
+        echo "| This interactive blue teaming experience was made by: |"
+        echo -e "| ${Blue}Yannick VC. (Cloud Intern)${MainC}                            |"
+        echo -e "| ${Red}Alexander D. (Cloud Intern)${MainC}                           |"
+        echo -e  "---------------------------------------------------------${ClearColor}"
+        sleep 5
+        ;;
+    "5")exit;;
+     * )echo "invalid option"
+        sleep 1
+        ;;
     esac
 done
-
