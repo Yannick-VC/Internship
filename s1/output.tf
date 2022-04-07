@@ -5,7 +5,7 @@ output "DB-Username" {
 
 output "DB-Password" {
   description = "Password used for login of database"
-  value = random_string.db_random.result
+  value = aws_db_instance.production.password
 }
 
 output "DB-Address" {
