@@ -75,7 +75,7 @@ sudo rm -rf learn-terraform-docker-container
 #Git Clone
 git clone https://github.com/YannickVC2/Internship
 
-echo -e "\n"====================================="
+echo -e "\n====================================="
 echo "Your system passed the test!"
 echo -e "=====================================\n"
 
