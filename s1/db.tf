@@ -5,7 +5,7 @@ resource "aws_db_instance" "production" {
   instance_class       = var.instanceclass
   db_name              = var.dbname
   username             = var.username
-  password             = var.password
+  password             = "password123"
   parameter_group_name = "default.mysql5.7"
   skip_final_snapshot  = true
   publicly_accessible = true
