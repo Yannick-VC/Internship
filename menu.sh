@@ -1,7 +1,5 @@
 #!/bin/bash
 
-: <<'END'
-
 echo "*********Install Terraform***********"
 
 #System updates
@@ -12,7 +10,7 @@ sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(l
 #Add Hashicorp GPG key
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 
-#Install curl
+#Install curl, git, awscli, gnupg, docker, terraform
 sudo apt-get install curl git awscli gnupg software-properties-common docker.io terraform -y
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
@@ -22,7 +20,7 @@ sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 #Check Terraform install
 terraform -help
 
-#Tab completion
+#Tab completion for TF
 touch ~/.bashrc
 terraform -install-autocomplete
 
@@ -30,7 +28,7 @@ terraform -install-autocomplete
 mkdir ./learn-terraform-docker-container
 cd learn-terraform-docker-container
 
-echo "*********DOCKER*************"
+#Docker
 
 #Prepare Docker
 sudo apt-get remove docker docker-engine docker.io containerd runc
@@ -39,9 +37,9 @@ sudo apt-get install docker.io -y
 #Check if Docker runs correctly
 sudo docker run hello-world
 
-echo "********TERRAFORM***********"
+#Terraform
 
-#Create main.tf
+#Create main.tf for test run
 sudo cat > main.tf <<EOL
 terraform {
   required_providers {
@@ -66,7 +64,7 @@ resource "docker_container" "nginx" {
 }
 EOL
 
-#Initialize, apply and destroy Terraform (to see if correctly installed)
+#Initialize, apply and destroy Terraform (check correct install)
 sudo terraform init
 sudo terraform validate
 sudo terraform apply
@@ -76,18 +74,12 @@ sudo docker rmi -f hello-world nginx
 cd ../
 sudo rm -rf learn-terraform-docker-container
 
-echo -e "\n********GITHUB PULLS***********"
+#Git Clone
 git clone https://github.com/YannickVC2/Internship
 
-echo -e "\n*************************************"
-echo "*************************************"
-echo "*************************************"
+echo -e "\n"====================================="
 echo "Your system passed the test!"
-echo "*************************************"
-echo "*************************************"
-echo -e "*************************************\n"
-
-END
+echo -e "=====================================\n"
 
 
 #Username validation
@@ -134,9 +126,9 @@ EOF
 read -n1 -s
 case "$REPLY" in
     "1")echo -e "${bold}$player${normal}, scenario 1 will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
-
-        #Make this path correct ./Internship/s1....
+        
         cd ./s1/
+        
         #terraform init
         #terraform plan
         #terraform apply -auto-approve
@@ -157,7 +149,7 @@ case "$REPLY" in
 
         echo -e "Thank you for playing our game $player! Let me put you back to the main menu."
         sleep 5
-         ;;
+        ;;
     "2")echo "Comming soon!"
         sleep 5
         ;;
