@@ -32,11 +32,6 @@ variable "publiccidr" {
 
 
 #DATABASE
-variable "password" {
-  default = "password123"
-  type = string
-}
-
 variable "username" {
   default = "root"
   type = string
