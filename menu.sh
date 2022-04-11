@@ -65,8 +65,8 @@ EOL
 #Initialize, apply and destroy Terraform (check correct install)
 sudo terraform init
 sudo terraform validate
-sudo terraform apply
-sudo terraform destroy -lock=false
+sudo terraform apply -auto-approve
+sudo terraform destroy -lock=false -auto-approve
 sudo docker rmi -f hello-world nginx
 
 cd ../
@@ -83,14 +83,13 @@ echo -e "=====================================\n"
 #Username validation
 read -r -p "Before continuing, enter your username! (between 4-10 characters) | " player
 
-while :
+while : 
 do
-        if [[ ${#player} -ge 11 || ${#player} -le 3 ]]; then
-                echo -e "Given username contains ${#player} character(s), re-enter your username (between 4-10 characters)"
-                read -r -p "" player
-        else
-                break
-fi
+if [[ ${#player} -ge 11 || ${#player} -le 3 ]]; then
+echo -e "Given username contains ${#player} character(s), re-enter your username (between 4-10 characters)"
+read -r -p "" player
+else break 
+fi 
 done
 
 #Styling
@@ -98,12 +97,11 @@ Blue="\033[01;34m"
 Red="\033[01;31m"
 MainC="\033[01;37m"
 ClearColor="\033[0m"
-
 bold=`tput bold`
 normal=`tput sgr0`
 
 #Playing menu
-while :
+while : 
 do
 clear
 cat<<EOF
@@ -121,12 +119,11 @@ cat<<EOF
 EOF
 
 #Player choises with all other code
-read -n1 -s
+read -n1 -s 
 case "$REPLY" in
     "1")echo -e "${bold}$player${normal}, scenario 1 will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
-        
+
         cd ./s1/
-        
         #terraform init
         #terraform plan
         #terraform apply -auto-approve
