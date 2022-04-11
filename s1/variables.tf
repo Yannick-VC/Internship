@@ -38,7 +38,7 @@ variable "username" {
 }
 
 variable "dbname" {
-  default = "production"
+  default = "hr"
   type = string
 }
 
