@@ -1,6 +1,6 @@
 #VPC
 resource "aws_vpc" "main_VPC" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpccidr
   instance_tenancy = "default"
   enable_dns_support = true
   enable_dns_hostnames = true
@@ -13,8 +13,8 @@ resource "aws_vpc" "main_VPC" {
 #Subnet 1
 resource "aws_subnet" "public_Subnet_1" {
   vpc_id     = aws_vpc.main_VPC.id
-  cidr_block = "10.0.1.0/24"
-  availability_zone = "eu-west-3a"
+  cidr_block = var.s1cidr
+  availability_zone = var.az1
 
   tags = {
     Name = "Public Subnet 1"
@@ -25,8 +25,8 @@ resource "aws_subnet" "public_Subnet_1" {
 #Subnet 2
 resource "aws_subnet" "public_Subnet_2" {
   vpc_id     = aws_vpc.main_VPC.id
-  cidr_block = "10.0.2.0/24"
-  availability_zone = "eu-west-3b"
+  cidr_block = var.s2cidr
+  availability_zone = var.az2
 
   tags = {
     Name = "Public Subnet 2"
@@ -34,12 +34,12 @@ resource "aws_subnet" "public_Subnet_2" {
 }
 
 
-#Routing table
+#Routing tables
 resource "aws_route_table" "Route_Table_1" {
   vpc_id = aws_vpc.main_VPC.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.publiccidr
     gateway_id = aws_internet_gateway.IGW.id
   }
 
@@ -52,7 +52,7 @@ resource "aws_route_table" "Route_Table_2" {
   vpc_id = aws_vpc.main_VPC.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = var.publiccidr
     gateway_id = aws_internet_gateway.IGW.id
   }
 
@@ -82,28 +82,58 @@ resource "aws_internet_gateway" "IGW" {
 }
 
 
-#Security Group
+#Security Groups
 resource "aws_security_group" "DB_SG" {
-  name        = "database_allow_all"
-  description = "Allow all inbound and outbound traffic to the database"
+  name        = "database_allow_ssh"
+  description = "Allow ssh traffic to the database"
   vpc_id      = aws_vpc.main_VPC.id
 
   ingress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = [var.publiccidr]
+  }
+
+  ingress {
+    from_port        = 3306
+    to_port          = 3306
+    protocol         = "tcp"
+    cidr_blocks      = [var.publiccidr]
   }
 
   egress {
     from_port        = 0
     to_port          = 0
     protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = [var.publiccidr]
   }
 
   tags = {
-    Name = "database_allow_all"
+    Name = "Database allow SSH"
+  }
+}
+
+resource "aws_security_group" "phpinstance" {
+  name = "phpinstance"
+  description = "allow for http"
+  vpc_id = aws_vpc.main_VPC.id
+  
+  ingress {
+     from_port = 80
+     to_port = 80
+     protocol = "tcp"
+     cidr_blocks = [var.publiccidr]
+  }
+  egress {
+     from_port = 0
+     to_port = 0
+     protocol = "-1"
+     cidr_blocks = [var.publiccidr]
+  }
+ 
+  tags = {
+     Name = "Allow HTTP"
   }
 }
 
@@ -123,6 +153,6 @@ resource "aws_network_interface" "NIC" {
   private_ips = ["10.0.1.50"]
 
   tags = {
-    Name = "NIC nr. 1"
+    Name = "Network Interface Card 1"
   }
 }
