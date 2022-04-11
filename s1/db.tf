@@ -1,4 +1,4 @@
-resource "aws_db_instance" "production" {
+resource "aws_db_instance" "database" {
   allocated_storage    = 5
   engine               = "mysql"
   engine_version       = "5.7"
@@ -14,6 +14,6 @@ resource "aws_db_instance" "production" {
   vpc_security_group_ids = [aws_security_group.DB_SG.id]
   
   provisioner "local-exec" {
-     command = "mysql -h ${aws_db_instance.production.address} -u ${aws_db_instance.production.username} --password=${aws_db_instance.production.password} ${aws_db_instance.production.db_name} < ./util/users.sql"
+     command = "mysql -h ${aws_db_instance.database.address} -u ${aws_db_instance.database.username} --password=${aws_db_instance.database.password} ${aws_db_instance.database.db_name} < ./util/users.sql"
   }
 }
