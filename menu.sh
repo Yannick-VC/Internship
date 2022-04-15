@@ -124,26 +124,45 @@ case "$REPLY" in
     "1")echo -e "${bold}$player${normal}, scenario 1 will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
 
         cd ./s1/
-        #terraform init
-        #terraform plan
-        #terraform apply -auto-approve
 
-        #Storyline
-        echo -e "${bold}What is my mission?${normal}"
-        echo -e "Your mission is to infiltrate the database (IP will be given later on), find a way to perform privillege escalation and\x0abreak into the backup databaselocated on a different subnet"
-        read -n 1 -s -r -p  $'\x0aPress any key to continue\x0a'
+	#aws configure put right
 
-        #Questions 1
-        read -r -p $'Question 1: What is the password to the PHPMyAdmin login page?\x0a' s1a1
+	#Creating IAM set-up
+	aws iam create-user --user-name ad-
+	aws iam create-login-profile --user-name ad- --password funkymonkey --no-password-reset-required
+	aws iam create-group --group-name administrators
+	aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess --group-name administrators
+	aws iam add-user-to-group --user-name ad- --group-name administrators
 
-        #Question 2
-        read -r -p $'Question 2: Which backup was compromised in the logging database? (format = DD/MM/YYYY)\x0a' s1a2
+	terraform init
+  terraform plan
+  terraform apply -auto-approve
 
-        #Question 3
-        read -r -p $'Question 3: \x0a' s1a3
+  #Storyline
+  echo -e "${bold}What is my mission?${normal}"
+  echo -e "Your mission is to infiltrate the database (IP will be given later on), find a way to perform privillege escalation and\x0abreak into the backup databaselocated on a different subnet"
+  read -n 1 -s -r -p  $'\x0aPress any key to continue\x0a'
 
-        echo -e "Thank you for playing our game $player! Let me put you back to the main menu."
-        sleep 5
+  #Questions 1
+  read -r -p $'Question 1: What is the password to the PHPMyAdmin login page?\x0a' s1a1
+
+  #Question 2
+  read -r -p $'Question 2: Which backup was compromised in the logging database? (format = DD/MM/YYYY)\x0a' s1a2
+
+  #Question 3
+  read -r -p $'Question 3: \x0a' s1a3
+
+	echo -e "Congratulations, you reached the end! Thank you for playing $player! The scenario will close down and you will be redirected to the main menu. This may take some time so sit back and grab a coffee!"
+
+	sleep 5
+	
+	#Reset entire IAM
+	aws iam remove-user-from-group --user-name ad- --group-name administrators
+	aws iam detach-group-policy --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess --group-name administrators
+	aws iam delete-user --user-name ad-
+	aws iam delete-group --group-name administrators
+
+	terraform destroy -auto-approve
         ;;
     "2")echo "Comming soon!"
         sleep 5
