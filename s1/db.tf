@@ -14,6 +14,9 @@ resource "aws_db_instance" "database" {
   vpc_security_group_ids = [aws_security_group.DB_SG.id]
   
   provisioner "local-exec" {
-     command = "mysql -h ${aws_db_instance.database.address} -u ${aws_db_instance.database.username} --password=${aws_db_instance.database.password} ${aws_db_instance.database.db_name} < ./util/users.sql"
+     command = <<-EOT
+	mysql -h ${aws_db_instance.database.address} -u ${aws_db_instance.database.username} --password=${aws_db_instance.database.password} ${aws_db_instance.database.db_name} < ./util/users.sql
+	mysql -h ${aws_db_instance.database.address} -u ${aws_db_instance.database.username} --password=${aws_db_instance.database.password} ${aws_db_instance.database.db_name} < ./util/finance.sql
+     EOT
   }
 }
