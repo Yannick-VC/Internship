@@ -25,7 +25,7 @@ resource "aws_backup_vault" "db_backup_vault" {
 }
 
 resource "aws_backup_selection" "db_backup" {
-  iam_role_arn = aws_iam_role.db_attaching.arn
+  iam_role_arn = aws_iam_role.backup_selection.arn
   name         = "backup_selection_db"
   plan_id      = aws_backup_plan.db_backups.id
 
