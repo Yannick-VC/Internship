@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#: <<'END'
+
 #System updates
 sudo apt-get update
 
@@ -75,6 +77,8 @@ sudo rm -rf learn-terraform-docker-container
 #Git Clone
 git clone https://github.com/YannickVC2/Internship
 
+#END
+
 echo -e "\n====================================="
 echo "Your system passed the test!"
 echo -e "=====================================\n"
@@ -83,13 +87,13 @@ echo -e "=====================================\n"
 #Username validation
 read -r -p "Before continuing, enter your username! (between 4-10 characters) | " player
 
-while : 
+while :
 do
-if [[ ${#player} -ge 11 || ${#player} -le 3 ]]; then
+if [[ ${#player} -le 3 || ${#player} -ge 11 ]]; then
 echo -e "Given username contains ${#player} character(s), re-enter your username (between 4-10 characters)"
 read -r -p "" player
-else break 
-fi 
+else break
+fi
 done
 
 #Styling
@@ -101,7 +105,7 @@ bold=`tput bold`
 normal=`tput sgr0`
 
 #Playing menu
-while : 
+while :
 do
 clear
 cat<<EOF
@@ -119,55 +123,58 @@ cat<<EOF
 EOF
 
 #Player choises with all other code
-read -n1 -s 
+read -n1 -s
 case "$REPLY" in
     "1")echo -e "${bold}$player${normal}, scenario 1 will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
 
         cd ./s1/
 
-	#aws configure put right
-
-	#Creating IAM set-up
-	aws iam create-user --user-name ad-
-	aws iam create-login-profile --user-name ad- --password funkymonkey --no-password-reset-required
-	aws iam create-group --group-name administrators
-	aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess --group-name administrators
-	aws iam add-user-to-group --user-name ad- --group-name administrators
+	#Configure AWS CLI correct using aws configure
 
 	terraform init
-  terraform plan
-  terraform apply -auto-approve
+        terraform plan
+        terraform apply -auto-approve
+	clear
+	terraform output
 
-  #Storyline
-  echo -e "${bold}What is my mission?${normal}"
-  echo -e "Your mission is to infiltrate the database (IP will be given later on), find a way to perform privillege escalation and\x0abreak into the backup databaselocated on a different subnet"
-  read -n 1 -s -r -p  $'\x0aPress any key to continue\x0a'
+        #Storyline
+        echo -e "${bold}What is my mission?${normal}"
+        echo -e "Your mission is to infiltrate the given public IP (found above), solve the challenges and hack your way through the network.\x0aNOTE: The AWS Region used for this challenge is EU-WEST-3 (Paris)"
+        read -n 1 -s -r -p  $'\x0aPress any key to start!\x0a'
 
-  #Questions 1
-  read -r -p $'Question 1: What is the password to the PHPMyAdmin login page?\x0a' s1a1
+        #/phpmyadmin
+        read -r -p $'Question 1: Give the exact endpoint for which the database is hosted. (using the provided public IP)\x0a' s1a1
 
-  #Question 2
-  read -r -p $'Question 2: Which backup was compromised in the logging database? (format = DD/MM/YYYY)\x0a' s1a2
+	#password123
+	read -r -p $'Question 2: What is the password for the PHPMyAdmin?\x0a' s1a2
 
-  #Question 3
-  read -r -p $'Question 3: \x0a' s1a3
+	#ad-
+        read -r -p $'Question 3: What is the username of the admin account? (found somewhere in the database)\x0a' s1a3
+
+	#funkymonkey
+	read -r -p $'Question 4: What is the decrypted password for this account?\x0a' s1a4
+
+	#Output ARN fetch
+        read -r -p $'Question 5: What is the ARN (Amazon Resource Name) for this users environment? (12 digits)\x0a' s1a5
+
+	#AWSBackupFullAccess is the answer
+	read -r -p $'Question 6: To what services has this user any rights?\x0a' s1a6
+
+	#Fetch BackUp plan ID
+	read -r -p $'Question 7: What is the ID for the backup?\x0a' s1a7
 
 	echo -e "Congratulations, you reached the end! Thank you for playing $player! The scenario will close down and you will be redirected to the main menu. This may take some time so sit back and grab a coffee!"
 
 	sleep 5
-	
-	#Reset entire IAM
-	aws iam remove-user-from-group --user-name ad- --group-name administrators
-	aws iam detach-group-policy --policy-arn arn:aws:iam::aws:policy/ReadOnlyAccess --group-name administrators
-	aws iam delete-user --user-name ad-
-	aws iam delete-group --group-name administrators
 
 	terraform destroy -auto-approve
         ;;
     "2")echo "Comming soon!"
-        sleep 5
+	sleep 5
+
         ;;
     "3")echo "Comming soon!"
+	sleep 5
         ;;
     "4")echo -e  "\n${MainC}---------------------------------------------------------"
         echo "| This interactive blue teaming experience was made by: |"
