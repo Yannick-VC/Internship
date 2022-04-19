@@ -131,43 +131,50 @@ case "$REPLY" in
 
 	#Configure AWS CLI correct using aws configure
 
-	terraform init
-        terraform plan
-        terraform apply -auto-approve
-	clear
-	terraform output
+	#terraform init
+	#terraform plan
+	#terraform apply -auto-approve
+	#clear
+	#terraform output
 
-        #Storyline
-        echo -e "${bold}What is my mission?${normal}"
-        echo -e "Your mission is to infiltrate the given public IP (found above), solve the challenges and hack your way through the network.\x0aNOTE: The AWS Region used for this challenge is EU-WEST-3 (Paris)"
-        read -n 1 -s -r -p  $'\x0aPress any key to start!\x0a'
+	#Storyline
+	echo -e "${bold}What is my mission?${normal}"
+	echo -e "Your mission is to infiltrate the given public IP (found above), solve the challenges and hack your way through the network.\x0aNOTE: The AWS Region used for this challenge is EU-WEST-3 (Paris)"
+	read -n 1 -s -r -p  $'\x0aPress any key to start!\x0a'
 
-        #/phpmyadmin
-        read -r -p $'Question 1: Give the exact endpoint for which the database is hosted. (using the provided public IP)\x0a' s1a1
+	###QUESTIONS###
 
-	#password123
-	read -r -p $'Question 2: What is the password for the PHPMyAdmin?\x0a' s1a2
-
-	#ad-
-        read -r -p $'Question 3: What is the username of the admin account? (found somewhere in the database)\x0a' s1a3
-
-	#funkymonkey
-	read -r -p $'Question 4: What is the decrypted password for this account?\x0a' s1a4
-
-	#Output ARN fetch
-        read -r -p $'Question 5: What is the ARN (Amazon Resource Name) for this users environment? (12 digits)\x0a' s1a5
-
-	#AWSBackupFullAccess is the answer
-	read -r -p $'Question 6: To what services has this user any rights?\x0a' s1a6
-
-	#Fetch BackUp plan ID
-	read -r -p $'Question 7: What is the ID for the backup?\x0a' s1a7
-
-	echo -e "Congratulations, you reached the end! Thank you for playing $player! The scenario will close down and you will be redirected to the main menu. This may take some time so sit back and grab a coffee!"
-
-	sleep 5
-
-	terraform destroy -auto-approve
+	#/phpmyadmin
+	read -r -p $'Question 1: Give the exact endpoint for which the database is hosted. (using the provided public IP)\x0a' s1a1
+	if [ "$s1a1" == "/phpmyadmin" ]; then
+		#password123
+  		read -r -p $'Question 2: What is the password for the PHPMyAdmin?\x0a' s1a2
+		if [ "$s1a2" == "password123" ]; then
+			#ad-
+  			read -r -p $'Question 3: What is the username of the admin account? (found somewhere in the database)\x0a' s1a3
+			if [ "$s1a3" == "ad-" ]; then
+				#funkymonkey
+  				read -r -p $'Question 4: What is the decrypted password for this account?\x0a' s1a4
+				if [ "$s1a4" == "funkymonkey" ]; then
+					#Output ARN fetch
+  					read -r -p $'Question 5: What is the ARN (Amazon Resource Name) for this users environment? (12 digits)\x0a' s1a5
+					if [ "$s1a5" == "/" ]; then
+						#AWSBackUpFullAccess
+						read -r -p $'Question 6: To what services has this user any rights?\x0a' s1a6
+						if [ "$s1a6" == "AWSBackUpFullAccess" ]; then
+							#BackUp Plan ID
+  							read -r -p $'Question 7: What is the ID for the backup?\x0a' s1a7
+							if [ "$s1a7" == "/" ]; then
+								echo -e "Congratulations, you reached the end! Thank you for playing $player! The scenario will close down and you will be redirected to the main menu. This may take some time so sit back and grab a coffee!"
+								sleep 5
+								terraform destroy -auto-approve
+							fi						
+						fi
+					fi
+				fi
+			fi
+		fi
+	fi	
         ;;
     "2")echo "Comming soon!"
 	sleep 5
