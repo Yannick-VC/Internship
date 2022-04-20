@@ -99,6 +99,7 @@ done
 #Styling
 Blue="\033[01;34m"
 Red="\033[01;31m"
+Green="\033[01;32m"
 MainC="\033[01;37m"
 ClearColor="\033[0m"
 bold=`tput bold`
@@ -127,15 +128,15 @@ read -n1 -s
 case "$REPLY" in
     "1")echo -e "${bold}$player${normal}, scenario 1 will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
 
-        cd ./s1/
+        	cd ./s1/
 
 	#Configure AWS CLI correct using aws configure
 
-	#terraform init
-	#terraform plan
-	#terraform apply -auto-approve
-	#clear
-	#terraform output
+	terraform init
+	terraform plan
+	terraform apply -auto-approve
+	clear
+	terraform output
 
 	#Storyline
 	echo -e "${bold}What is my mission?${normal}"
@@ -145,36 +146,124 @@ case "$REPLY" in
 	###QUESTIONS###
 
 	#/phpmyadmin
+	MAX_TRIES="70"
+	TRIES="0"
+	REMAINING="70"
 	read -r -p $'Question 1: Give the exact endpoint for which the database is hosted. (using the provided public IP)\x0a' s1a1
-	if [ "$s1a1" == "/phpmyadmin" ]; then
-		#password123
-  		read -r -p $'Question 2: What is the password for the PHPMyAdmin?\x0a' s1a2
-		if [ "$s1a2" == "password123" ]; then
-			#ad-
-  			read -r -p $'Question 3: What is the username of the admin account? (found somewhere in the database)\x0a' s1a3
-			if [ "$s1a3" == "ad-" ]; then
-				#funkymonkey
-  				read -r -p $'Question 4: What is the decrypted password for this account?\x0a' s1a4
-				if [ "$s1a4" == "funkymonkey" ]; then
-					#Output ARN fetch
-  					read -r -p $'Question 5: What is the ARN (Amazon Resource Name) for this users environment? (12 digits)\x0a' s1a5
-					if [ "$s1a5" == "/" ]; then
-						#AWSBackUpFullAccess
-						read -r -p $'Question 6: To what services has this user any rights?\x0a' s1a6
-						if [ "$s1a6" == "AWSBackUpFullAccess" ]; then
-							#BackUp Plan ID
-  							read -r -p $'Question 7: What is the ID for the backup?\x0a' s1a7
-							if [ "$s1a7" == "/" ]; then
-								echo -e "Congratulations, you reached the end! Thank you for playing $player! The scenario will close down and you will be redirected to the main menu. This may take some time so sit back and grab a coffee!"
-								sleep 5
-								terraform destroy -auto-approve
-							fi						
-						fi
-					fi
-				fi
-			fi
-		fi
-	fi	
+	while [ "$s1a1" != "/phpmyadmin" ] ; do
+		if [ "$REMAINING" -le "0" ]; then
+			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
+			sleep 5
+			terraform destroy -auto-approve
+			exit
+		else
+			TRIES=$(expr $TRIES + 1)
+			REMAINING=$(expr $MAX_TRIES - $TRIES)
+			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
+			read -r -p $'Question 1: Give the exact endpoint for which the database is hosted. (using the provided public IP)\x0a' s1a1
+		fi	
+	done
+	echo -e "${Green}CORRECT!${ClearColor}\x0a"
+
+	read -r -p $'Question 2: What is the password for the PHPMyAdmin?\x0a' s1a2
+	while [ "$s1a2" != "password123" ]; do
+		if [ "$REMAINING" -le "0" ]; then
+			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
+			sleep 5
+			terraform destroy -auto-approve
+			exit
+		else
+			TRIES=$(expr $TRIES + 1)
+			REMAINING=$(expr $MAX_TRIES - $TRIES)
+			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
+			read -r -p $'Question 2: What is the password for the PHPMyAdmin?\x0a' s1a2
+		fi	
+	done
+	echo -e "${Green}CORRECT!${ClearColor}\x0a"
+
+	read -r -p $'Question 3: What is the username of the admin account? (found somewhere in the database)\x0a' s1a3
+	while [ "$s1a3" != "ad-" ] ; do
+		if [ "$REMAINING" -le "0" ]; then
+			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
+			sleep 5
+			terraform destroy -auto-approve
+			exit
+		else
+			TRIES=$(expr $TRIES + 1)
+			REMAINING=$(expr $MAX_TRIES - $TRIES)
+			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
+			read -r -p $'Question 3: What is the username of the admin account? (found somewhere in the database)\x0a' s1a3
+		fi	
+	done
+	echo -e "${Green}CORRECT!${ClearColor}\x0a"
+
+	read -r -p $'Question 4: What is the decrypted password for this account?\x0a' s1a4
+	while [ "$s1a4" != "funkymonkey" ]; do
+		if [ "$REMAINING" -le "0" ]; then
+			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
+			sleep 5
+			terraform destroy -auto-approve
+			exit
+		else
+			TRIES=$(expr $TRIES + 1)
+			REMAINING=$(expr $MAX_TRIES - $TRIES)
+			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
+			read -r -p $'Question 4: What is the decrypted password for this account?\x0a' s1a4
+		fi	
+	done
+	echo -e "${Green}CORRECT!${ClearColor}\x0a"
+
+	read -r -p $'Question 5: What is the ARN (Amazon Resource Name) for this users environment? (12 digits)\x0a' s1a5
+	while [ "$s1a5" != "/" ]; do
+		if [ "$REMAINING" -le "0" ]; then
+			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
+			sleep 5
+			terraform destroy -auto-approve
+			exit
+		else
+			TRIES=$(expr $TRIES + 1)
+			REMAINING=$(expr $MAX_TRIES - $TRIES)
+			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
+			read -r -p $'Question 5: What is the ARN (Amazon Resource Name) for this users environment? (12 digits)\x0a' s1a5
+		fi	
+	done
+	echo -e "${Green}CORRECT!${ClearColor}\x0a"
+
+	read -r -p $'Question 6: To what services has this user any rights?\x0a' s1a6
+	while [ "$s1a6" != "AWSBackUpFullAccess" ]; do
+		if [ "$REMAINING" -le "0" ]; then
+			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
+			sleep 5
+			terraform destroy -auto-approve
+			exit
+		else
+			TRIES=$(expr $TRIES + 1)
+			REMAINING=$(expr $MAX_TRIES - $TRIES)
+			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
+			read -r -p $'Question 6: To what services has this user any rights?\x0a' s1a6
+		fi	
+	done
+	echo -e "${Green}CORRECT!${ClearColor}\x0a"
+	
+	read -r -p $'Question 7: What is the ID for the backup?\x0a' s1a7
+	while [ "$s1a7" != "/" ]; do
+		if [ "$REMAINING" -le "0" ]; then
+			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
+			sleep 5
+			terraform destroy -auto-approve
+			exit
+		else
+			TRIES=$(expr $TRIES + 1)
+			REMAINING=$(expr $MAX_TRIES - $TRIES)
+			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
+			read -r -p $'Question 7: What is the ID for the backup?\x0a' s1a7
+		fi	
+	done
+	echo -e "${Green}CORRECT!${ClearColor}\x0a"
+
+	echo -e "Congratulations, you reached the end! Thank you for playing $player! The scenario will close down and you will be redirected to the main menu. This may take some time so sit back and grab a coffee!"
+	sleep 5
+	terraform destroy -auto-approve
         ;;
     "2")echo "Comming soon!"
 	sleep 5
@@ -190,7 +279,7 @@ case "$REPLY" in
         echo -e  "---------------------------------------------------------${ClearColor}"
         sleep 5
         ;;
-    "5")exit;;
+    "5")exit 0;;
      * )echo "invalid option"
         sleep 1
         ;;
