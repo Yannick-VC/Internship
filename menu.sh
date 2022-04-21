@@ -6,13 +6,14 @@
 sudo apt-get update
 
 #Install curl, git, awscli, gnupg, docker, terraform
-sudo apt-get install curl git awscli gnupg software-properties-common docker.io terraform -y
+sudo apt-get install curl git awscli gnupg software-properties-common docker.io -y
 
 #Add official Hashicorp linux repository
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 #Add Hashicorp GPG key
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 
+sudo apt-get install terraform -y
 
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
