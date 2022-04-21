@@ -13,7 +13,7 @@ sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(l
 #Add Hashicorp GPG key
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 
-sudo apt-get install terraform -y
+sudo apt-get update && sudo apt-get install terraform -y
 
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
