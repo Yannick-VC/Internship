@@ -146,11 +146,11 @@ case "$REPLY" in
 	###QUESTIONS###
 
 	#/phpmyadmin
-	MAX_TRIES="70"
+	MAX_TRIES="35"
 	TRIES="0"
-	REMAINING="70"
+	REMAINING="35"
 	read -r -p $'Question 1: Give the exact endpoint for which the database is hosted. (using the provided public IP)\x0a' s1a1
-	while [ "$s1a1" != "/phpmyadmin" ] ; do
+	while [ "$s1a1" != "/phpmyadmin" ]; do
 		if [ "$REMAINING" -le "0" ]; then
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
@@ -161,7 +161,7 @@ case "$REPLY" in
 			REMAINING=$(expr $MAX_TRIES - $TRIES)
 			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
 			read -r -p $'Question 1: Give the exact endpoint for which the database is hosted. (using the provided public IP)\x0a' s1a1
-		fi	
+		fi
 	done
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
 
@@ -177,7 +177,7 @@ case "$REPLY" in
 			REMAINING=$(expr $MAX_TRIES - $TRIES)
 			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
 			read -r -p $'Question 2: What is the password for the PHPMyAdmin?\x0a' s1a2
-		fi	
+		fi
 	done
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
 
@@ -193,7 +193,7 @@ case "$REPLY" in
 			REMAINING=$(expr $MAX_TRIES - $TRIES)
 			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
 			read -r -p $'Question 3: What is the username of the admin account? (found somewhere in the database)\x0a' s1a3
-		fi	
+		fi
 	done
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
 
@@ -209,7 +209,7 @@ case "$REPLY" in
 			REMAINING=$(expr $MAX_TRIES - $TRIES)
 			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
 			read -r -p $'Question 4: What is the decrypted password for this account?\x0a' s1a4
-		fi	
+		fi
 	done
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
 
@@ -225,7 +225,7 @@ case "$REPLY" in
 			REMAINING=$(expr $MAX_TRIES - $TRIES)
 			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
 			read -r -p $'Question 5: What is the ARN (Amazon Resource Name) for this users environment? (12 digits)\x0a' s1a5
-		fi	
+		fi
 	done
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
 
@@ -241,10 +241,10 @@ case "$REPLY" in
 			REMAINING=$(expr $MAX_TRIES - $TRIES)
 			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
 			read -r -p $'Question 6: To what services has this user any rights?\x0a' s1a6
-		fi	
+		fi
 	done
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
-	
+
 	read -r -p $'Question 7: What is the ID for the backup?\x0a' s1a7
 	while [ "$s1a7" != "/" ]; do
 		if [ "$REMAINING" -le "0" ]; then
@@ -257,7 +257,7 @@ case "$REPLY" in
 			REMAINING=$(expr $MAX_TRIES - $TRIES)
 			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
 			read -r -p $'Question 7: What is the ID for the backup?\x0a' s1a7
-		fi	
+		fi
 	done
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
 
