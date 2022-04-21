@@ -130,7 +130,7 @@ read -n1 -s
 case "$REPLY" in
     "1")echo -e "${Bold}$player${Normal}, the scenario will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
 
-        cd ./s1/
+        cd ./Internship/s1/
 
 	#Configure AWS CLI correct using aws configure
 	aws configure
