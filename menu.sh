@@ -102,8 +102,8 @@ Red="\033[01;31m"
 Green="\033[01;32m"
 MainC="\033[01;37m"
 ClearColor="\033[0m"
-bold=`tput bold`
-normal=`tput sgr0`
+Bold=$(tput bold)
+Normal=$(tput sgr0)
 
 #Playing menu
 while :
@@ -115,22 +115,22 @@ cat<<EOF
 |------------------------------------------ |
 | Hello, $player, please make a choise:
 |                                           |
-| Play scenario 1 (1)                       |
-| Play scenario 2 (2)                       |
-| How to play     (3)                       |
-| Credits         (4)                       |
-| Quit the game   (5)                       |
+| Play            (1)                       |
+| How to play     (2)                       |
+| Credits         (3)                       |
+| Quit            (4)                       |
 ---------------------------------------------
 EOF
 
 #Player choises with all other code
 read -n1 -s
 case "$REPLY" in
-    "1")echo -e "${bold}$player${normal}, scenario 1 will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
+    "1")echo -e "${Bold}$player${Normal}, the scenario will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
 
-        	cd ./s1/
+        cd ./s1/
 
 	#Configure AWS CLI correct using aws configure
+	aws configure
 
 	terraform init
 	terraform plan
@@ -139,7 +139,7 @@ case "$REPLY" in
 	terraform output
 
 	#Storyline
-	echo -e "${bold}What is my mission?${normal}"
+	echo -e "${Bold}What is my mission?${Normal}"
 	echo -e "Your mission is to infiltrate the given public IP (found above), solve the challenges and hack your way through the network.\x0aNOTE: The AWS Region used for this challenge is EU-WEST-3 (Paris)"
 	read -n 1 -s -r -p  $'\x0aPress any key to start!\x0a'
 
@@ -261,27 +261,51 @@ case "$REPLY" in
 	done
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
 
-	echo -e "Congratulations, you reached the end! Thank you for playing $player! The scenario will close down and you will be redirected to the main menu. This may take some time so sit back and grab a coffee!"
-	sleep 5
+	echo -e "Congratulations, you reached the end! Thank you for playing $player! The scenario will close down and you will be redirected to the main menu.\x0aThis may take some time so sit back and grab a coffee!"
+	sleep 7
 	terraform destroy -auto-approve
         ;;
-    "2")echo "Comming soon!"
-	sleep 5
+    "2")cat <<EOF
+${Bold}How many people can play this game?${Normal}
+This game is designed to be a single-player game but can be deployed on 1 VM and everyone
+can brainstorm together and come up with ways to tackle the scenario.
 
+${Bold}What is the aim of the game?${Normal}
+The aim of the game is to hack your way through several AWS resources ranging from databases
+to webservers to IAM systems etc. whilst answering questions (like a Capture The Flag (CTF) game).
+
+${Bold}How do I start a scenario?${Normal}
+When you are ready to tackle the challenge, press '1' to play the scenario.
+
+${Bold}How do I quit the game?${Normal}
+If you wish to quit the game, without having started a challenge or at the end of one, simply press '4' to quit the application.
+
+${Bold}What if, whilst playing the game, I try to quit the game?${Normal}
+In this case there are 2 options:
+	- Exhaust your guesses (wrongly answer the questions) until you have no guesses left and the game will terminate itself.
+	- Force quit the game which will let the resources live and exist. Afterwards you have to manually go into
+ 	  folder of the scenario and type 'terraform destroy -auto-approve' and wait till there is a green box saying "x resources destroyed".
+
+${Bold}Things to note:${Normal}
+	- Answers must be given with respect to upper and lowercase. (e.g. "FooBar" is not the same as "foobar")
+	- The player has a total of 35 guesses spread over 7 questions. (so that a player can have 5 guesses per question)
+	- The games must be played on a completely new Linux VM. (to avoid the installed and configured items from not working as intend)
+	- You must have fun whilst playing ;)
+EOF
+
+	read -n 1 -s -r -p  $'\x0aPress any key to return to the main menu!\x0a'
+	#sleep 5
         ;;
-    "3")echo "Comming soon!"
-	sleep 5
-        ;;
-    "4")echo -e  "\n${MainC}---------------------------------------------------------"
+    "3")echo -e  "\x0a${MainC}---------------------------------------------------------"
         echo "| This interactive blue teaming experience was made by: |"
         echo -e "| ${Blue}Yannick VC. (Cloud Intern)${MainC}                            |"
         echo -e "| ${Red}Alexander D. (Cloud Intern)${MainC}                           |"
         echo -e  "---------------------------------------------------------${ClearColor}"
-        sleep 5
+        sleep 10
         ;;
-    "5")exit 0;;
-     * )echo "invalid option"
-        sleep 1
+    "4")exit 0;;
+     * )echo "Invalid option"
+        sleep 0.3
         ;;
     esac
 done
