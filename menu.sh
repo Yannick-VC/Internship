@@ -86,6 +86,9 @@ echo -e "\n====================================="
 echo "Your system passed the test!"
 echo -e "=====================================\n"
 
+echo "Please enter your AWS access key credentials correctly" 
+#Configure AWS CLI correct using aws configure
+aws configure
 
 #Username validation
 read -r -p "Before continuing, enter your username! (between 4-10 characters) | " player
@@ -132,14 +135,11 @@ case "$REPLY" in
 
         cd ./Internship/s1/
 
-	#Configure AWS CLI correct using aws configure
-	aws configure
-
-	terraform init
-	terraform plan
-	terraform apply -auto-approve
+	sudo terraform init
+	sudo terraform plan
+	sudo terraform apply -auto-approve
 	clear
-	terraform output
+	sudo terraform output
 
 	#Storyline
 	echo -e "${Bold}What is my mission?${Normal}"
