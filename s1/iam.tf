@@ -1,14 +1,14 @@
 #IAM User
-resource "aws_iam_user" "main" {
-  name          = "ad-"
-  force_destroy = true
-}
+#resource "aws_iam_user" "main" {
+#  name          = "ad-"
+#  force_destroy = true
+#}
 
 #Corresponding User Login Profile
-resource "aws_iam_user_login_profile" "main" {
-  user    = aws_iam_user.main.name
-  password_reset_required = false
-}
+#resource "aws_iam_user_login_profile" "main" {
+#  user    = aws_iam_user.main.name
+#  password_reset_required = false
+#}
 
 
 #Administrators IAM Group
@@ -24,12 +24,12 @@ resource "aws_iam_group_policy_attachment" "aws_config_attach" {
 
 
 #IAM User to IAM Group
-resource "aws_iam_user_group_membership" "main" {
-  user = aws_iam_user.main.name
-  groups = [
-    aws_iam_group.administrators.name,
-  ]
-}
+#resource "aws_iam_user_group_membership" "main" {
+#  user = aws_iam_user.main.name
+#  groups = [
+#    aws_iam_group.administrators.name,
+#  ]
+#}
 
 #Role for Backup
 resource "aws_iam_role" "backup_selection" {
@@ -53,10 +53,6 @@ resource "aws_iam_role" "backup_selection" {
     tag-key = "BackUp_Selection"
   }
 }
-
-
-
-
 
 output "pswd" {
   sensitive = false
