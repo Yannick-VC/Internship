@@ -138,6 +138,10 @@ case "$REPLY" in
 	sudo terraform init
 	sudo terraform plan
 	sudo terraform apply -auto-approve
+	#Creating user with static password 
+	aws iam create-user --user-name ad-
+	aws iam create-login-profile --user-name ad- --password funkymonkey --no-password-reset-required
+	aws iam aduser-to-group --user-name ad- --group-name administrators
 	clear
 	sudo terraform output
 
@@ -266,7 +270,12 @@ case "$REPLY" in
 
 	echo -e "Congratulations, you reached the end! Thank you for playing $player! The scenario will close down and you will be redirected to the main menu.\x0aThis may take some time so sit back and grab a coffee!"
 	sleep 7
+	
+	#Remove IAM user
+	aws iam remove-user-from-group --user-name ad- --group-name administrators
+	aws iam delete-user --user-name ad-
 	terraform destroy -auto-approve
+	
         ;;
     "2")cat <<EOF
 ${Bold}How many people can play this game?${Normal}
