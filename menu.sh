@@ -161,6 +161,8 @@ case "$REPLY" in
 		if [ "$REMAINING" -le "0" ]; then
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
+			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
 		else
@@ -177,6 +179,8 @@ case "$REPLY" in
 		if [ "$REMAINING" -le "0" ]; then
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
+			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
 		else
@@ -193,6 +197,8 @@ case "$REPLY" in
 		if [ "$REMAINING" -le "0" ]; then
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
+			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
 		else
@@ -209,6 +215,8 @@ case "$REPLY" in
 		if [ "$REMAINING" -le "0" ]; then
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
+			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
 		else
@@ -225,6 +233,8 @@ case "$REPLY" in
 		if [ "$REMAINING" -le "0" ]; then
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
+			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
 		else
@@ -241,6 +251,8 @@ case "$REPLY" in
 		if [ "$REMAINING" -le "0" ]; then
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
+			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
 		else
@@ -257,6 +269,8 @@ case "$REPLY" in
 		if [ "$REMAINING" -le "0" ]; then
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
+			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
 		else
