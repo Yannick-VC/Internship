@@ -140,8 +140,8 @@ case "$REPLY" in
 	sudo terraform apply -auto-approve
 	#Creating user with static password 
 	aws iam create-user --user-name ad-
-	aws iam create-login-profile --user-name ad- --password funkymonkey --no-password-reset-required
-	aws iam aduser-to-group --user-name ad- --group-name administrators
+	aws iam create-login-profile --user-name ad- --password Funkymonkey123! --no-password-reset-required
+	aws iam add-user-to-group --user-name ad- --group-name administrators
 	clear
 	sudo terraform output
 
