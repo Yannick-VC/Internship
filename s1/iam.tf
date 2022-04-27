@@ -53,8 +53,3 @@ resource "aws_iam_role" "backup_selection" {
     tag-key = "BackUp_Selection"
   }
 }
-
-output "pswd" {
-  sensitive = false
-  value = aws_iam_user_login_profile.main.password
-}
