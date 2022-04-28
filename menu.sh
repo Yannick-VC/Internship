@@ -106,6 +106,7 @@ case "$REPLY" in
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
 			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-login-profile --user-name ad-
 			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
@@ -124,6 +125,7 @@ case "$REPLY" in
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
 			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-login-profile --user-name ad-
 			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
@@ -142,6 +144,7 @@ case "$REPLY" in
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
 			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-login-profile --user-name ad-
 			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
@@ -160,6 +163,7 @@ case "$REPLY" in
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
 			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-login-profile --user-name ad-
 			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
@@ -178,6 +182,7 @@ case "$REPLY" in
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
 			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-login-profile --user-name ad-
 			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
@@ -196,6 +201,7 @@ case "$REPLY" in
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
 			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-login-profile --user-name ad-
 			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
@@ -214,6 +220,7 @@ case "$REPLY" in
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
 			aws iam remove-user-from-group --user-name ad- --group-name administrators
+			aws iam delete-login-profile --user-name ad-
 			aws iam delete-user --user-name ad-
 			terraform destroy -auto-approve
 			exit
