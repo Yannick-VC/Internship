@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#: <<'END'
-
 #System updates
 sudo apt-get update
 
@@ -27,60 +25,8 @@ terraform -help
 touch ~/.bashrc
 terraform -install-autocomplete
 
-#New directory
-mkdir ./learn-terraform-docker-container
-cd learn-terraform-docker-container
-
-#Docker
-
-#Prepare Docker
-sudo apt-get remove docker docker-engine docker.io containerd runc
-sudo apt-get install docker.io -y
-
-#Check if Docker runs correctly
-sudo docker run hello-world
-
-#Terraform
-
-#Create main.tf for test run
-sudo cat > main.tf <<EOL
-terraform {
-  required_providers {
-    docker = {
-      source  = "kreuzwerker/docker"
-      version = "~> 2.13.0"
-    }
-  }
-}
-provider "docker" {}
-resource "docker_image" "nginx" {
-  name         = "nginx:latest"
-  keep_locally = false
-}
-resource "docker_container" "nginx" {
-  image = docker_image.nginx.latest
-  name  = "tutorial"
-  ports {
-    internal = 80
-    external = 8000
-  }
-}
-EOL
-
-#Initialize, apply and destroy Terraform (check correct install)
-sudo terraform init
-sudo terraform validate
-sudo terraform apply -auto-approve
-sudo terraform destroy -lock=false -auto-approve
-sudo docker rmi -f hello-world nginx
-
-cd ../
-sudo rm -rf learn-terraform-docker-container
-
 #Git Clone
 git clone https://github.com/YannickVC2/Internship
-
-#END
 
 echo -e "\n====================================="
 echo "Your system passed the test!"
