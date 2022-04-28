@@ -163,7 +163,7 @@ case "$REPLY" in
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
 
 	read -r -p $'Question 4: What is the decrypted password for this account?\x0a' s1a4
-	while [ "$s1a4" != "funkymonkey" ]; do
+	while [ "$s1a4" != "Funkymonkey123!" ]; do
 		if [ "$REMAINING" -le "0" ]; then
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
