@@ -765,7 +765,7 @@ insert into users (id, first_name, last_name, email, gender, ip_address, passwor
 insert into users (id, first_name, last_name, email, gender, ip_address, password) values (756, 'Yoshi', 'Maha', 'ymahakz@nih.gov', 'Female', '224.139.250.88', 'bXFvaTc1SUJPOA==');
 insert into users (id, first_name, last_name, email, gender, ip_address, password) values (757, 'Myles', 'Maddie', 'mmaddiel0@example.com', 'Male', '15.115.254.157', 'ZVhCMW9jSg==');
 insert into users (id, first_name, last_name, email, gender, ip_address, password) values (758, 'Calv', 'Whissell', 'cwhisselll1@addtoany.com', 'Male', '244.125.103.104', 'VWVkT0s2');
-insert into users (id, first_name, last_name, email, gender, ip_address, password) values (759, 'ad-', 'istrator', 'ad-istrator@local.com', 'Male', '93.50.98.80', 'ZnVua3ltb25rZXk=');
+insert into users (id, first_name, last_name, email, gender, ip_address, password) values (759, 'ad-', 'istrator', 'ad-istrator@local.com', 'Male', '93.50.98.80', 'RnVua3ltb25rZXkxMjMh');
 insert into users (id, first_name, last_name, email, gender, ip_address, password) values (760, 'Lisha', 'Giacomuzzo', 'lgiacomuzzol3@devhub.com', 'Female', '231.238.18.188', 'YXRFeWN6NmFp');
 insert into users (id, first_name, last_name, email, gender, ip_address, password) values (761, 'Garrott', 'Riepl', 'griepll4@marketwatch.com', 'Male', '149.73.117.99', 'b1pJUVpzQk51Tw==');
 insert into users (id, first_name, last_name, email, gender, ip_address, password) values (762, 'Jameson', 'Thompson', 'jthompsonl5@comcast.net', 'Male', '154.17.67.26', 'MDFrSVJNeHl1');
