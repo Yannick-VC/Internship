@@ -90,6 +90,11 @@ case "$REPLY" in
 	aws iam add-user-to-group --user-name ad- --group-name administrators
 	clear
 	sudo terraform output
+	
+	#Vault solution fetch
+	export vaultname=$(aws backup list-backup-vaults --query 'BackupVaultList[1].BackupVaultName')
+	temp="${vaultname%\"}"
+	Answer="${temp#\"}"
 
 	#Storyline
 	echo -e "${Bold}What is my mission?${Normal}"
@@ -97,9 +102,9 @@ case "$REPLY" in
 	read -n 1 -s -r -p  $'\x0aPress any key to start!\x0a'
 
 	###QUESTIONS###
-	MAX_TRIES="35"
+	MAX_TRIES="30"
 	TRIES="0"
-	REMAINING="35"
+	REMAINING="30"
 	read -r -p $'Question 1: Give the exact endpoint for which the database is hosted. (using the provided public IP)\x0a' s1a1
 	while [ "$s1a1" != "/phpmyadmin" ]; do
 		if [ "$REMAINING" -le "0" ]; then
@@ -176,27 +181,8 @@ case "$REPLY" in
 	done
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
 
-	read -r -p $'Question 5: What is the ARN (Amazon Resource Name) for this users environment? (12 digits)\x0a' s1a5
-	while [ "$s1a5" != "/" ]; do
-		if [ "$REMAINING" -le "0" ]; then
-			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
-			sleep 5
-			aws iam remove-user-from-group --user-name ad- --group-name administrators
-			aws iam delete-login-profile --user-name ad-
-			aws iam delete-user --user-name ad-
-			terraform destroy -auto-approve
-			exit
-		else
-			TRIES=$(expr $TRIES + 1)
-			REMAINING=$(expr $MAX_TRIES - $TRIES)
-			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
-			read -r -p $'Question 5: What is the ARN (Amazon Resource Name) for this users environment? (12 digits)\x0a' s1a5
-		fi
-	done
-	echo -e "${Green}CORRECT!${ClearColor}\x0a"
-
-	read -r -p $'Question 6: To what services has this user any rights?\x0a' s1a6
-	while [ "$s1a6" != "AWSBackUpFullAccess" ]; do
+	read -r -p $'Question 5: To what services has this user any rights?\x0a' s1a5
+	while [ "$s1a5" != "AWSBackUpFullAccess" ]; do
 		if [ "$REMAINING" -le "0" ]; then
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
@@ -214,8 +200,8 @@ case "$REPLY" in
 	done
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
 
-	read -r -p $'Question 7: What is the ID for the backup?\x0a' s1a7
-	while [ "$s1a7" != "/" ]; do
+	read -r -p $'Question 6: What is the ID for the backup?\x0a' s1a6
+	while [ "$s1a6" != "$Answer" ]; do
 		if [ "$REMAINING" -le "0" ]; then
 			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 			sleep 5
