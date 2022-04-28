@@ -97,8 +97,10 @@ case "$REPLY" in
 	Answer="${temp#\"}"
 
 	#Storyline
-	echo -e "${Bold}What is my mission?${Normal}"
-	echo -e "Your mission is to infiltrate the given public IP (found above), solve the challenges and hack your way through the network.\x0aNOTE: The AWS Region used for this challenge is EU-WEST-3 (Paris)"
+	echo -e "${Bold}Scenario description?${Normal}"
+	echo -e "For the internship project of a couple of high school students, they were tasked to create a production environment. \x0aInside of this environment they created a VM that would act as a web server, a database that was connected to this web server and they \x0a also made use of user accounts in the AWS console as well as the Backup service for their database. These students, however, \x0adidn’t have any experience with creation secure environment which resulted in a publicly facing resources, basic  \x0acredentials and poor encryption methods." 
+	echo -e "Combining the results of these errors would allow an attacker with malicious intent to take over the entire environment, destroying or misusing its content or take the company hostage."
+	echo -e "NOTE: The AWS Region used for this challenge is EU-WEST-3 (Paris)"
 	read -n 1 -s -r -p  $'\x0aPress any key to start!\x0a'
 
 	###QUESTIONS###
