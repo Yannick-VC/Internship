@@ -3,7 +3,7 @@ output "Public_IP" {
   value = aws_instance.phpmyadmin.public_ip
 }
 
-output "Account ID" {
+output "Account_ID" {
   description = "The account ID needed to log into the AWS account"
   value = aws_vpc.main_VPC.owner_id
 }
