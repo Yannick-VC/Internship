@@ -81,15 +81,15 @@ case "$REPLY" in
 
         cd ./Internship/s1/
 
-	sudo terraform init
-	sudo terraform plan
-	sudo terraform apply -auto-approve
+	terraform init
+	terraform plan
+	terraform apply -auto-approve
 	#Creating user with static password 
 	aws iam create-user --user-name ad-
 	aws iam create-login-profile --user-name ad- --password Funkymonkey123! --no-password-reset-required
 	aws iam add-user-to-group --user-name ad- --group-name administrators
 	clear
-	sudo terraform output
+	terraform output
 	
 	#Vault solution fetch
 	export vaultname=$(aws backup list-backup-vaults --query 'BackupVaultList[1].BackupVaultName')
