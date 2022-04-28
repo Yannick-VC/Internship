@@ -195,7 +195,7 @@ case "$REPLY" in
 			TRIES=$(expr $TRIES + 1)
 			REMAINING=$(expr $MAX_TRIES - $TRIES)
 			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
-			read -r -p $'Question 6: To what services has this user any rights?\x0a' s1a6
+			read -r -p $'Question 5: To what services has this user any rights?\x0a' s1a5
 		fi
 	done
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
@@ -214,7 +214,7 @@ case "$REPLY" in
 			TRIES=$(expr $TRIES + 1)
 			REMAINING=$(expr $MAX_TRIES - $TRIES)
 			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
-			read -r -p $'Question 7: What is the ID for the backup?\x0a' s1a7
+			read -r -p $'Question 6: What is the ID for the backup?\x0a' s1a6
 		fi
 	done
 	echo -e "${Green}CORRECT!${ClearColor}\x0a"
