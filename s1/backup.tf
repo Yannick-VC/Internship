@@ -21,7 +21,7 @@ resource "aws_backup_plan" "db_backups" {
 
 
 resource "aws_backup_vault" "db_backup_vault" {
-  name        = "example_backup_vault"
+  name        = "secret_company_backup"
 }
 
 resource "aws_backup_selection" "db_backup" {
