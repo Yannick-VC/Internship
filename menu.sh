@@ -81,20 +81,20 @@ case "$REPLY" in
 
         cd ./Internship/s1/
 
-	#terraform init
-	#terraform plan
-	#terraform apply -auto-approve
-	#Creating user with static password 
-	#aws iam create-user --user-name ad-
-	#aws iam create-login-profile --user-name ad- --password Funkymonkey123! --no-password-reset-required
-	#aws iam add-user-to-group --user-name ad- --group-name administrators
-	#clear
-	#terraform output
+	terraform init
+	terraform plan
+	terraform apply -auto-approve
+	Creating user with static password 
+	aws iam create-user --user-name ad-
+	aws iam create-login-profile --user-name ad- --password Funkymonkey123! --no-password-reset-required
+	aws iam add-user-to-group --user-name ad- --group-name administrators
+	clear
+	terraform output
 
 	#Vault solution fetch
-	#export vaultname=$(aws backup list-backup-vaults --query 'BackupVaultList[1].BackupVaultName')
-	#temp="${vaultname%\"}"
-	#Answer="${temp#\"}"
+	export vaultname=$(aws backup list-backup-vaults --query 'BackupVaultList[1].BackupVaultName')
+	temp="${vaultname%\"}"
+	Answer="${temp#\"}"
 
 	#Storyline
 	echo -e "${Bold}Scenario description?${Normal}"
@@ -142,7 +142,7 @@ case "$REPLY" in
 			if [ $REMAINING -le "0" ]; then
 				echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
 				sleep 5
-				#destroy
+				destroy
 				exit
 			else
 				TRIES=$(expr $TRIES + 1)
