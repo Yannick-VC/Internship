@@ -84,7 +84,7 @@ case "$REPLY" in
 	terraform init
 	terraform plan
 	terraform apply -auto-approve
-	Creating user with static password 
+	#Creating user with static password 
 	aws iam create-user --user-name ad-
 	aws iam create-login-profile --user-name ad- --password Funkymonkey123! --no-password-reset-required
 	aws iam add-user-to-group --user-name ad- --group-name administrators
