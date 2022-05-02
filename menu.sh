@@ -77,24 +77,24 @@ EOF
 #Player choises with all other code
 read -n1 -s
 case "$REPLY" in
-    "1")echo -e "${Bold}$player${Normal}, the scenario will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
+    "1")echo -e "Welcome ${Bold}$player${Normal}, the scenario will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
 
         cd ./Internship/s1/
 
-	terraform init
-	terraform plan
-	terraform apply -auto-approve
+	#terraform init
+	#terraform plan
+	#terraform apply -auto-approve
 	#Creating user with static password 
-	aws iam create-user --user-name ad-
-	aws iam create-login-profile --user-name ad- --password Funkymonkey123! --no-password-reset-required
-	aws iam add-user-to-group --user-name ad- --group-name administrators
-	clear
-	terraform output
-	
+	#aws iam create-user --user-name ad-
+	#aws iam create-login-profile --user-name ad- --password Funkymonkey123! --no-password-reset-required
+	#aws iam add-user-to-group --user-name ad- --group-name administrators
+	#clear
+	#terraform output
+
 	#Vault solution fetch
-	export vaultname=$(aws backup list-backup-vaults --query 'BackupVaultList[1].BackupVaultName')
-	temp="${vaultname%\"}"
-	Answer="${temp#\"}"
+	#export vaultname=$(aws backup list-backup-vaults --query 'BackupVaultList[1].BackupVaultName')
+	#temp="${vaultname%\"}"
+	#Answer="${temp#\"}"
 
 	#Storyline
 	echo -e "${Bold}Scenario description?${Normal}"
@@ -103,133 +103,69 @@ case "$REPLY" in
 	echo -e "NOTE: The AWS Region used for this challenge is EU-WEST-3 (Paris)"
 	read -n 1 -s -r -p  $'\x0aPress any key to start!\x0a'
 
-	###QUESTIONS###
+	export vaultname=$(aws backup list-backup-vaults --query 'BackupVaultList[1].BackupVaultName')
+	temp="${vaultname%\"}"
+	finalanswer="${temp#\"}"
+
 	MAX_TRIES="30"
 	TRIES="0"
 	REMAINING="30"
-	read -r -p $'Question 1: Give the exact endpoint for which the database is hosted. (using the provided public IP)\x0a' s1a1
-	while [ "$s1a1" != "/phpmyadmin" ]; do
-		if [ "$REMAINING" -le "0" ]; then
-			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
-			sleep 5
-			aws iam remove-user-from-group --user-name ad- --group-name administrators
-			aws iam delete-login-profile --user-name ad-
-			aws iam delete-user --user-name ad-
-			terraform destroy -auto-approve
-			exit
-		else
-			TRIES=$(expr $TRIES + 1)
-			REMAINING=$(expr $MAX_TRIES - $TRIES)
-			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
-			read -r -p $'Question 1: Give the exact endpoint for which the database is hosted. (using the provided public IP)\x0a' s1a1
-		fi
-	done
-	echo -e "${Green}CORRECT!${ClearColor}\x0a"
 
-	read -r -p $'Question 2: What is the password for the PHPMyAdmin?\x0a' s1a2
-	while [ "$s1a2" != "password123" ]; do
-		if [ "$REMAINING" -le "0" ]; then
-			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
-			sleep 5
-			aws iam remove-user-from-group --user-name ad- --group-name administrators
-			aws iam delete-login-profile --user-name ad-
-			aws iam delete-user --user-name ad-
-			terraform destroy -auto-approve
-			exit
-		else
-			TRIES=$(expr $TRIES + 1)
-			REMAINING=$(expr $MAX_TRIES - $TRIES)
-			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
-			read -r -p $'Question 2: What is the password for the PHPMyAdmin?\x0a' s1a2
-		fi
-	done
-	echo -e "${Green}CORRECT!${ClearColor}\x0a"
 
-	read -r -p $'Question 3: What is the username of the admin account? (found somewhere in the database)\x0a' s1a3
-	while [ "$s1a3" != "ad-" ] ; do
-		if [ "$REMAINING" -le "0" ]; then
-			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
-			sleep 5
-			aws iam remove-user-from-group --user-name ad- --group-name administrators
-			aws iam delete-login-profile --user-name ad-
-			aws iam delete-user --user-name ad-
-			terraform destroy -auto-approve
-			exit
-		else
-			TRIES=$(expr $TRIES + 1)
-			REMAINING=$(expr $MAX_TRIES - $TRIES)
-			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
-			read -r -p $'Question 3: What is the username of the admin account? (found somewhere in the database)\x0a' s1a3
-		fi
-	done
-	echo -e "${Green}CORRECT!${ClearColor}\x0a"
+	###QUESTIONS
+	q1="Question 1: Give the exact endpoint for which the database is hosted. (using the provided public IP)"
+	q2="Question 2: What is the password for the PHPMyAdmin login page?"
+	q3="Question 3: What is the username of the admin account? (found somewhere in the database)"
+	q4="Question 4: What is the decrypted password for this account?"
+	q5="Question 5: To what services has this user any rights?"
+	q6="Question 6: What is the ID for the backup?"
 
-	read -r -p $'Question 4: What is the decrypted password for this account?\x0a' s1a4
-	while [ "$s1a4" != "Funkymonkey123!" ]; do
-		if [ "$REMAINING" -le "0" ]; then
-			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
-			sleep 5
-			aws iam remove-user-from-group --user-name ad- --group-name administrators
-			aws iam delete-login-profile --user-name ad-
-			aws iam delete-user --user-name ad-
-			terraform destroy -auto-approve
-			exit
-		else
-			TRIES=$(expr $TRIES + 1)
-			REMAINING=$(expr $MAX_TRIES - $TRIES)
-			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
-			read -r -p $'Question 4: What is the decrypted password for this account?\x0a' s1a4
-		fi
-	done
-	echo -e "${Green}CORRECT!${ClearColor}\x0a"
+	a1="/phpmyadmin"
+	a2="password123"
+	a3="ad-"
+	a4="Funkymonkey123!"
+	a5="AwsBackUpFullAccess"
+	a6=$finalanswer
 
-	read -r -p $'Question 5: To what services has this user any rights?\x0a' s1a5
-	while [ "$s1a5" != "AWSBackUpFullAccess" ]; do
-		if [ "$REMAINING" -le "0" ]; then
-			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
-			sleep 5
-			aws iam remove-user-from-group --user-name ad- --group-name administrators
-			aws iam delete-login-profile --user-name ad-
-			aws iam delete-user --user-name ad-
-			terraform destroy -auto-approve
-			exit
-		else
-			TRIES=$(expr $TRIES + 1)
-			REMAINING=$(expr $MAX_TRIES - $TRIES)
-			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
-			read -r -p $'Question 5: To what services has this user any rights?\x0a' s1a5
-		fi
-	done
-	echo -e "${Green}CORRECT!${ClearColor}\x0a"
+	###FUNCTIONS
+	destroy() {
+		aws iam remove-user-from-group --user-name ad- --group-name administrators
+		aws iam delete-login-profile --user-name ad-
+		aws iam delete-user --user-name ad-
+		terraform destroy -auto-approve
+	}
 
-	read -r -p $'Question 6: What is the ID for the backup?\x0a' s1a6
-	while [ "$s1a6" != "$Answer" ]; do
-		if [ "$REMAINING" -le "0" ]; then
-			echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
-			sleep 5
-			aws iam remove-user-from-group --user-name ad- --group-name administrators
-			aws iam delete-login-profile --user-name ad-
-			aws iam delete-user --user-name ad-
-			terraform destroy -auto-approve
-			exit
-		else
-			TRIES=$(expr $TRIES + 1)
-			REMAINING=$(expr $MAX_TRIES - $TRIES)
-			echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
-			read -r -p $'Question 6: What is the ID for the backup?\x0a' s1a6
-		fi
-	done
-	echo -e "${Green}CORRECT!${ClearColor}\x0a"
+	ask_question() {
+		echo "$1"
+		read -r -p $'' answer
+		while [ $answer != "$2" ]; do
+			if [ $REMAINING -le "0" ]; then
+				echo "You've gotten to many wrong answers (we might think you're brute forcing the answers). The game will shut down now."
+				sleep 5
+				#destroy
+				exit
+			else
+				TRIES=$(expr $TRIES + 1)
+				REMAINING=$(expr $MAX_TRIES - $TRIES)
+				echo -e "\x0a${Red}WRONG${ClearColor}, $REMAINING guesse(s) remaining."
+				echo "$1"
+				read -r -p $'' answer
+			fi
+		done
+		echo -e "${Green}CORRECT!${ClearColor}\x0a"
+	}
+
+	ask_question "$q1" "$a1"
+	ask_question "$q2" "$a2"
+	ask_question "$q3" "$a3"
+	ask_question "$q4" "$a4"
+	ask_question "$q5" "$a5"
+	ask_question "$q6" "$a6"
 
 	echo -e "Congratulations, you reached the end! Thank you for playing $player! The scenario will close down and you will be redirected to the main menu.\x0aThis may take some time so sit back and grab a coffee!"
 	sleep 7
-	
-	#Remove IAM user
-	aws iam remove-user-from-group --user-name ad- --group-name administrators
-	aws iam delete-user --user-name ad-
-	terraform destroy -auto-approve
-	
-        ;;
+	destroy
+	 ;;
     "2")cat <<EOF
 ${Bold}How many people can play this game?${Normal}
 This game is designed to be a single-player game but can be deployed on 1 VM and everyone
