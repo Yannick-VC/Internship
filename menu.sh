@@ -37,12 +37,12 @@ echo "Please enter your AWS access key credentials correctly"
 aws configure
 
 #Username validation
-read -r -p "Before continuing, enter your username! (between 4-10 characters) | " player
+read -r -p "Before continuing, enter your username! (between 3-15 characters) | " player
 
 while :
 do
-if [[ ${#player} -le 3 || ${#player} -ge 11 ]]; then
-echo -e "Given username contains ${#player} character(s), re-enter your username (between 4-10 characters)"
+if [[ ${#player} -le 2 || ${#player} -ge 16 ]]; then
+echo -e "Given username contains ${#player} character(s), re-enter your username (between 3-15 characters)"
 read -r -p "" player
 else break
 fi
