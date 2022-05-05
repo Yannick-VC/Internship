@@ -1,5 +1,4 @@
-#NETWORKING
-
+#NETWORK
 variable "s1cidr" {
   default = "10.0.1.0/24"
   type = string
@@ -29,7 +28,6 @@ variable "publiccidr" {
   default = "0.0.0.0/0"
   type = string
 }
-
 
 #DATABASE
 variable "username" {
