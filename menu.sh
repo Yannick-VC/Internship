@@ -73,7 +73,7 @@ EOF
 #All player choices from menu
 read -n1 -s
 case "$REPLY" in
-    "1")echo -e "Welcome ${Bold}$player${Normal}, the scenario will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
+    "1")echo -e "Welcome ${Bold}$player${Normal}, the scenario will be set up for you. This can take up to 10 minutes so \x0agrab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
 
 	#cd to correct place
         cd ./Internship/s1/
