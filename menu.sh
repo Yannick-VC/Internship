@@ -21,7 +21,7 @@ unzip awscli-bundle.zip
 sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
 #Git Clone
-git clone https://github.com/YannickVC2/Internship
+git clone https://github.com/Yannick-VC/Internship
 
 echo -e "\n====================================="
 echo "Your system passed the test!"
