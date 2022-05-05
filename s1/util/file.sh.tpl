@@ -38,14 +38,13 @@ EOF
 #PASTE TERRAFORM DATABASE CREDENTIALS AND LOAD THEM INTO BASH
 cd /usr/share/phpmyadmin/
 
+#USE TEMP FILE AND PULL CREDENTIALS OUT
 echo "db_password=${db_password}" > ./cred.txt
 echo "db_username=${db_username}" >> ./cred.txt
 echo "db_address=${db_address}" >> ./cred.txt
-
 db_password=`sed -n 's/^db_password=\(.*\)/\1/p' < ./cred.txt`
 db_username=`sed -n 's/^db_username=\(.*\)/\1/p' < ./cred.txt`
 db_address=`sed -n 's/^db_address=\(.*\)/\1/p' < ./cred.txt`
-
 
 #CONFIG FILE
 sudo cat > ./config.inc.php << 'EOL'
@@ -71,18 +70,15 @@ EOL
 search="\$cfg['Servers'][\$i]['host'] = '\$host';"; 
 replace="\$cfg['Servers'][\$i]['host'] = '$db_address';";
 sed -i "s/\$cfg\[.Servers.\]\[\$i\]\[.host.\]=.*/$replace/" ./config.inc.php
-
 search2="\$cfg['Servers'][\$i]['user'] = '\$username';";
 replace2="\$cfg['Servers'][\$i]['user'] = '$db_username';";
 sed -i "s/\$cfg\[.Servers.\]\[\$i\]\[.user.\]\s*=.*/$replace2/" ./config.inc.php
-
 search3="\$cfg['Servers'][\$i]['password'] = '\$password';";
 replace3="\$cfg['Servers'][\$i]['password'] = '$db_password';";
 sed -i "s/\$cfg\[.Servers.\]\[\$i\]\[.password.\]\s*=.*/$replace3/" ./config.inc.php
 
 #REMOVE TEMP CRED FILE & RESTART APACHE2
 rm ./cred.txt
-
 sudo a2enconf phpmyadmin
 sudo systemctl restart apache2
 
