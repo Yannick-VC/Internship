@@ -81,4 +81,3 @@ sed -i "s/\$cfg\[.Servers.\]\[\$i\]\[.password.\]\s*=.*/$replace3/" ./config.inc
 rm ./cred.txt
 sudo a2enconf phpmyadmin
 sudo systemctl restart apache2
-
