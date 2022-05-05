@@ -77,7 +77,7 @@ case "$REPLY" in
 
 	#cd to correct place
         cd ./Internship/s1/
-	rm menu.sh
+	rm ../menu.sh
 
 	#Initialize entire scenario
 	terraform init
