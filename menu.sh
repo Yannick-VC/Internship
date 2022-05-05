@@ -92,7 +92,8 @@ case "$REPLY" in
 	terraform output
 
 	#Storyline
-	echo -e "${Bold}Scenario description?${Normal}"
+	echo -e "${Bold}Scenario description${Normal}"
+	echo -e "First of all thanks for playing! Lets dive into the scenario."
 	echo -e "For this scenario of a couple of high school students, they were tasked to create a production environment. \x0aInside of this environment they created a VM that would act as a web server, a database that was connected to this web server and they\x0a also made use of user accounts in the AWS console as well as the Backup service for their database.\x0aThese students, however, didn’t have any experience with creation secure environment which resulted in a publicly facing resources, basic  \x0acredentials and poor encryption methods." 
 	echo -e "Combining the results of these errors would allow an attacker with malicious intent to take over the entire environment, destroying or misusing its content or take the company hostage."
 	echo -e "NOTE: The AWS Region used for this challenge is EU-WEST-3 (Paris)"
@@ -160,7 +161,7 @@ case "$REPLY" in
 
 	#End of scenario + destruction
 	echo -e "Congratulations, you reached the end! Thank you for playing $player! The scenario will close down and you will be redirected to the main menu.\x0aThis may take some time so sit back and grab a coffee!"
-	sleep 7
+	sleep 10
 	destroy
 	;;
     "2")cat <<EOF
@@ -192,13 +193,12 @@ ${Bold}NOTES:${Normal}
 ${Bold}Don't forget to have fun playing and learn some new tricks along the way ;)${Normal}
 EOF
 	read -n 1 -s -r -p  $'\x0aPress any key to return to the main menu!\x0a'
-	#sleep 5
         ;;
     "3")echo -e  "\x0a${MainC}---------------------------------------------------------"
         echo "| This interactive blue teaming experience was made by: |"
         echo -e "| ${Blue}Yannick VC. (Cyber Cloud Intern)${MainC}                            |"
         echo -e  "---------------------------------------------------------${ClearColor}"
-        sleep 10
+	read -n 1 -s -r -p  $'\x0aPress any key to return to the main menu!\x0a'
         ;;
     "4")exit 0;;
      * )echo "Invalid option"
