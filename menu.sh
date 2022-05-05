@@ -193,7 +193,7 @@ ${Bold}NOTES:${Normal}
 	- The player has a total of 30 guesses spread over 6 questions. This results in 5 tries per question.
 	- It is recommended that the game should be played on a completely new Linux VM. (to avoid the installed and configured items from not working as intend)
 
-${Blue}Don't forget to have fun playing and learn some new tricks along the way ;)${ClearColor}
+${Bold}Don't forget to have fun playing and learn some new tricks along the way ;)${Normal}
 EOF
 
 	read -n 1 -s -r -p  $'\x0aPress any key to return to the main menu!\x0a'
