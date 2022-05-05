@@ -115,7 +115,7 @@ case "$REPLY" in
 	q3="Question 3: What is the username of the admin account? (found somewhere in the database)"
 	q4="Question 4: What is the decrypted password for this account?"
 	q5="Question 5: To what services has this user any rights?"
-	q6="Question 6: What is the ID for the backup?"
+	q6="Question 6: What is the name for the specific backup vault?"
 	a1="/phpmyadmin"
 	a2="password123"
 	a3="ad-"
