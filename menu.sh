@@ -8,22 +8,17 @@ sudo apt-get install curl git awscli gnupg software-properties-common docker.io 
 
 #Add official Hashicorp linux repository
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
 #Add Hashicorp GPG key
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 
+#Install Terraform
 sudo apt-get update && sudo apt-get install terraform -y
 
-curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-unzip awscli-bundle.zip
-sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-
-#Check Terraform install
-terraform -help
-
-#Tab completion for TF
-touch ~/.bashrc
-terraform -install-autocomplete
+#Install AWSCLI
+#curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+#unzip awscli-bundle.zip
+#sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
 #Git Clone
 git clone https://github.com/YannickVC2/Internship
@@ -32,13 +27,14 @@ echo -e "\n====================================="
 echo "Your system passed the test!"
 echo -e "=====================================\n"
 
-echo "Please enter your AWS access key credentials correctly" 
 #Configure AWS CLI correct using aws configure
+echo "Please enter your AWS access key credentials correctly" 
 aws configure
 
 #Username validation
 read -r -p "Before continuing, enter your username! (between 3-15 characters) | " player
 
+#If username incorrect length/characters
 while :
 do
 if [[ ${#player} -le 2 || ${#player} -ge 16 ]]; then
@@ -74,28 +70,26 @@ cat<<EOF
 ---------------------------------------------
 EOF
 
-#Player choises with all other code
+#All player choices from menu
 read -n1 -s
 case "$REPLY" in
     "1")echo -e "Welcome ${Bold}$player${Normal}, the scenario will be set up for you. This can take up to 10 minutes so grab a coffee and wait untill you see the Public_IP output at the bottom!\x0a"
 
+	#cd to correct place
         cd ./Internship/s1/
 	rm menu.sh
-	
+
+	#Initialize entire scenario
 	terraform init
 	terraform plan
 	terraform apply -auto-approve
+
 	#Creating user with static password 
 	aws iam create-user --user-name ad-
 	aws iam create-login-profile --user-name ad- --password Funkymonkey123! --no-password-reset-required
 	aws iam add-user-to-group --user-name ad- --group-name administrators
 	clear
 	terraform output
-
-	#Vault solution fetch
-	export vaultname=$(aws backup list-backup-vaults --query 'BackupVaultList[1].BackupVaultName')
-	temp="${vaultname%\"}"
-	Answer="${temp#\"}"
 
 	#Storyline
 	echo -e "${Bold}Scenario description?${Normal}"
@@ -104,23 +98,23 @@ case "$REPLY" in
 	echo -e "NOTE: The AWS Region used for this challenge is EU-WEST-3 (Paris)"
 	read -n 1 -s -r -p  $'\x0aPress any key to start!\x0a'
 
+	#Fetch vault solution from AWSCLI
 	export vaultname=$(aws backup list-backup-vaults --query 'BackupVaultList[1].BackupVaultName')
 	temp="${vaultname%\"}"
 	finalanswer="${temp#\"}"
 
+	#Game rules
 	MAX_TRIES="30"
 	TRIES="0"
 	REMAINING="30"
 
-
-	###QUESTIONS
+	#Q&A
 	q1="Question 1: Give the exact endpoint for which the database is hosted. (using the provided public IP)"
 	q2="Question 2: What is the password for the PHPMyAdmin login page?"
 	q3="Question 3: What is the username of the admin account? (found somewhere in the database)"
 	q4="Question 4: What is the decrypted password for this account?"
 	q5="Question 5: To what services has this user any rights?"
 	q6="Question 6: What is the ID for the backup?"
-
 	a1="/phpmyadmin"
 	a2="password123"
 	a3="ad-"
@@ -128,7 +122,7 @@ case "$REPLY" in
 	a5="AwsBackUpFullAccess"
 	a6=$finalanswer
 
-	###FUNCTIONS
+	#Functions
 	destroy() {
 		aws iam remove-user-from-group --user-name ad- --group-name administrators
 		aws iam delete-login-profile --user-name ad-
@@ -156,6 +150,7 @@ case "$REPLY" in
 		echo -e "${Green}CORRECT!${ClearColor}\x0a"
 	}
 
+	#Ask consequential questions
 	ask_question "$q1" "$a1"
 	ask_question "$q2" "$a2"
 	ask_question "$q3" "$a3"
@@ -163,10 +158,11 @@ case "$REPLY" in
 	ask_question "$q5" "$a5"
 	ask_question "$q6" "$a6"
 
+	#End of scenario + destruction
 	echo -e "Congratulations, you reached the end! Thank you for playing $player! The scenario will close down and you will be redirected to the main menu.\x0aThis may take some time so sit back and grab a coffee!"
 	sleep 7
 	destroy
-	 ;;
+	;;
     "2")cat <<EOF
 ${Bold}How many people can play this game?${Normal}
 This game is designed to be a single-player game, but it can be deployed on 1 VM whilst everyone
@@ -195,7 +191,6 @@ ${Bold}NOTES:${Normal}
 
 ${Bold}Don't forget to have fun playing and learn some new tricks along the way ;)${Normal}
 EOF
-
 	read -n 1 -s -r -p  $'\x0aPress any key to return to the main menu!\x0a'
 	#sleep 5
         ;;
