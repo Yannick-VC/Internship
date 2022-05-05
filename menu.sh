@@ -169,30 +169,31 @@ case "$REPLY" in
 	 ;;
     "2")cat <<EOF
 ${Bold}How many people can play this game?${Normal}
-This game is designed to be a single-player game but can be deployed on 1 VM and everyone
-can brainstorm together and come up with ways to tackle the scenario.
+This game is designed to be a single-player game, but it can be deployed on 1 VM whilst everyone
+is brainstorming together and coming up with ways to tackle the challenge.
 
 ${Bold}What is the aim of the game?${Normal}
 The aim of the game is to hack your way through several AWS resources ranging from databases
 to webservers to IAM systems etc. whilst answering questions (like a Capture The Flag (CTF) game).
 
 ${Bold}How do I start a scenario?${Normal}
-When you are ready to tackle the challenge, press '1' to play the scenario.
+When you are ready to tackle the challenge, press "1" to play the scenario.
 
 ${Bold}How do I quit the game?${Normal}
-If you wish to quit the game, without having started a challenge or at the end of one, simply press '4' to quit the application.
+If you wish to quit the game, without having started a challenge or at the end of one, simply press "4" to quit.
 
 ${Bold}What if, whilst playing the game, I try to quit the game?${Normal}
 In this case there are 2 options:
-	- Exhaust your guesses (wrongly answer the questions) until you have no guesses left and the game will terminate itself.
-	- Force quit the game which will let the resources live and exist. Afterwards you have to manually go into
- 	  folder of the scenario and type 'terraform destroy -auto-approve' and wait till there is a green box saying "x resources destroyed".
+	- Exhaust your guesses (wrongly answer the questions) until you have no guesses left. This will result in the game terminating itself.
+	- Force quit the game: note that this will keep the resources alive and existing. Afterwards you have to manually go into
+ 	  folder (${Bold}cd ./Internship/s1${Normal}) of the scenario and type 'terraform destroy -auto-approve' and wait till there is a green box saying "x resources destroyed".
 
-${Bold}Things to note:${Normal}
-	- Answers must be given with respect to upper and lowercase. (e.g. "FooBar" is not the same as "foobar")
-	- The player has a total of 35 guesses spread over 7 questions. (so that a player can have 5 guesses per question)
-	- The games must be played on a completely new Linux VM. (to avoid the installed and configured items from not working as intend)
-	- You must have fun whilst playing ;)
+${Bold}NOTES:${Normal}
+	- Answers must be given with respect to upper and lowercase. (e.g. "Foo Bar" is not the same as "foo bar")
+	- The player has a total of 30 guesses spread over 6 questions. This results in 5 tries per question.
+	- It is recommended that the game should be played on a completely new Linux VM. (to avoid the installed and configured items from not working as intend)
+
+${Blue}Don't forget to have fun playing and learn some new tricks along the way ;)${ClearColor}
 EOF
 
 	read -n 1 -s -r -p  $'\x0aPress any key to return to the main menu!\x0a'
