@@ -202,7 +202,6 @@ EOF
     "3")echo -e  "\x0a${MainC}---------------------------------------------------------"
         echo "| This interactive blue teaming experience was made by: |"
         echo -e "| ${Blue}Yannick VC. (Cloud Intern)${MainC}                            |"
-        echo -e "| ${Red}Alexander D. (Cloud Intern)${MainC}                           |"
         echo -e  "---------------------------------------------------------${ClearColor}"
         sleep 10
         ;;
