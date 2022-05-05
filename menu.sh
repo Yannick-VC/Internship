@@ -196,7 +196,7 @@ EOF
         ;;
     "3")echo -e  "\x0a${MainC}---------------------------------------------------------"
         echo "| This interactive blue teaming experience was made by: |"
-        echo -e "| ${Blue}Yannick VC. (Cyber Cloud Intern)${MainC}                            |"
+        echo -e "| ${Blue}Yannick VC. (Cyber Cloud Intern)${MainC}                      |"
         echo -e  "---------------------------------------------------------${ClearColor}"
 	read -n 1 -s -r -p  $'\x0aPress any key to return to the main menu!\x0a'
         ;;
