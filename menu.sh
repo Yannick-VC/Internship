@@ -3,8 +3,8 @@
 #System updates
 sudo apt-get update
 
-#Install curl, git, awscli, gnupg, docker, terraform
-sudo apt-get install curl git awscli gnupg software-properties-common docker.io mysql-client-core-8.0 -y
+#Install curl, git, gnupg, docker, terraform
+sudo apt-get install curl git gnupg software-properties-common docker.io mysql-client-core-8.0 -y
 
 #Add official Hashicorp linux repository
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
@@ -16,9 +16,9 @@ curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 sudo apt-get update && sudo apt-get install terraform -y
 
 #Install AWSCLI
-#curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-#unzip awscli-bundle.zip
-#sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+unzip awscli-bundle.zip
+sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
 #Git Clone
 git clone https://github.com/YannickVC2/Internship
