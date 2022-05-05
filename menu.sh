@@ -4,7 +4,7 @@
 sudo apt-get update
 
 #Install curl, git, gnupg, docker, terraform
-sudo apt-get install curl git gnupg software-properties-common docker.io mysql-client-core-8.0 -y
+sudo apt-get install curl git awscli gnupg software-properties-common docker.io mysql-client-core-8.0 -y
 
 #Add official Hashicorp linux repository
 sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
