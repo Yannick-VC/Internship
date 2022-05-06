@@ -14,7 +14,6 @@ Before installing make sure the prerequesites are in place:
 - Fresh Linux install *([Ubuntu 20.14TLS download](https://ubuntu.com/download/desktop) as the recommended VM OS)*
 - AWS account *([How to create an AWS account?](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/))*
 - AWS accesss key & secret *([How to create and retrieve access/secret key?](https://www.msp360.com/resources/blog/how-to-find-your-aws-access-key-id-and-secret-access-key/))*
-- Access to this repository's files
 
 Afterwards follow these steps:
 1) **Download** the **menu.sh** file or copy paste its content in an empty file and change its execution permissions with `chmod +x menu.sh`
